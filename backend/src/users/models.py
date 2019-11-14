@@ -16,8 +16,7 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_restaurant', True)
         if extra_fields.get('is_restaurant') is not True:
             raise ValueError('must have is_restaurant=True.')
-        #return self.create_user(email, password, **extra_fields)
-        return extra_fields
+        return self.create_user(email, password, **extra_fields)
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)

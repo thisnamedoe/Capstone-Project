@@ -12,9 +12,9 @@ def create(request):
     # other stuff too
     # create using function or modelname.objects.create(param1=x, param2 = y.....etc)
     if _restaurant == 'yes':
-        newuser = CustomUserManager().create_user(_email, _password)
-    else:
         newuser = CustomUserManager().create_restaurant_user(_email, _password)
+    else:
+        newuser = CustomUserManager().create_user(_email, _password)
         #return HttpResponse(newuser.get('is_restaurant'))
     #email('user_email', 0)
     return HttpResponse('user created '+newuser.email, status=201)
@@ -33,7 +33,7 @@ def delete(request):
     #get object
     obj = User.objects.get(email=_username)
     name = obj.delete()
-    return HttpResponse('user deleted'+name, status=200)
+    return HttpResponse(name, status=200)
 
 def authenticate(request):
     pass
