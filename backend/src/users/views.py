@@ -32,8 +32,9 @@ def delete(request):
     _username = request.POST.get('email')
     #get object
     obj = User.objects.get(email=_username)
+#    return HttpResponse(obj.is_restaurant)
     name = obj.delete()
-    return HttpResponse(name, status=200)
+    return JsonResponse(name, status=200, safe = False)
 
 def authenticate(request):
     pass
