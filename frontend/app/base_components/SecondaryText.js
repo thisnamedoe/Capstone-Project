@@ -1,0 +1,12 @@
+import styled from 'styled-components';
+import Color from '../../src/constants/colors';
+
+const SecondaryText = styled.Text`
+  color: ${Color.secondaryColor};
+  width: 100%;
+  text-align: ${props => (props.align ? props.align : 'left')};
+  font-size: ${props => (props.size ? props.size : '16px')};
+`;
+
+
+export default SecondaryText;

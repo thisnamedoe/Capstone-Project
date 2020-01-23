@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Dimensions from 'Dimensions';
 import {
@@ -14,9 +14,9 @@ import UserInput from './UserInput';
 import ButtonSubmit from './ButtonSubmit';
 import SignupSection from './SignUpSection';
 
-import usernameImg from '../../assets/images/username.png';
-import passwordImg from '../../assets/images/password.png';
-import eyeImg from '../../assets/images/eye_black.png';
+import usernameImg from '../../../assets/images/username.png';
+import passwordImg from '../../../assets/images/password.png';
+import eyeImg from '../../../assets/images/eye_black.png';
 
 export default class Form extends Component {
   constructor(props) {
@@ -30,8 +30,8 @@ export default class Form extends Component {
 
   showPass() {
     this.state.press === false
-      ? this.setState({showPass: false, press: true})
-      : this.setState({showPass: true, press: false});
+      ? this.setState({ showPass: false, press: true })
+      : this.setState({ showPass: true, press: false });
   }
 
   render() {
