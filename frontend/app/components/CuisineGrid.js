@@ -104,14 +104,6 @@ class CuisineGrid extends Component {
           keyExtractor={item => item}
           renderItem={this.renderItem}
         />
-        <RoundButton
-          title="Payment"
-          onPress={this.props.onPaymentSubmit}
-        />
-        <RoundButton
-          title="Payment Fail"
-          onPress={this.props.onPaymentFail}
-        />
       </AppBase>
 
 
@@ -122,8 +114,6 @@ class CuisineGrid extends Component {
 CuisineGrid.propTypes = {
   onPress: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
-  onPaymentSubmit: PropTypes.func.isRequired,
-  onPaymentFail: PropTypes.func.isRequired,
 };
 
 export default CuisineGrid;

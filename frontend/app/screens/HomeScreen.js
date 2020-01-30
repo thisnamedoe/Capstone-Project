@@ -13,7 +13,8 @@ import CuisineGrid from '../components/CuisineGrid';
 import PrimaryText from '../base_components/PrimaryText';
 // import RestaurantList from '../components/RestaurantList';
 import FilterRadioModal from '../components/FilterRadioModal';
-import { fetchCuisineTypes, fetchRestaurant, fetchRestaurantByType } from '../../src/actions/index';
+// import { fetchCuisineTypes, fetchRestaurant, fetchRestaurantByType } from '../../src/actions/index';
+import { fetchCuisineTypes } from '../../src/actions/index';
 
 class HomeScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -28,7 +29,6 @@ class HomeScreen extends Component {
 
   componentDidMount() {
     const cuisineTypes = this.props;
-
     if (!cuisineTypes || cuisineTypes.length === 0) {
       this.props.fetchCuisineTypes();
     }
@@ -43,15 +43,6 @@ class HomeScreen extends Component {
       onRight: () => this.handleSignOut(),
     });
   };
-
-  openPaymentScreen = (value) => {
-    console.log(value);
-    Actions.cartScreen();
-  }
-
-  onPaymentFail = (value) => {
-    Actions.paymentFailed();
-  }
 
   render() {
     const filterData = this.props.cuisineTypes.map(type => ({
@@ -80,8 +71,6 @@ class HomeScreen extends Component {
           <CuisineGrid
             data={this.props.cuisineTypes}
             onPress={this.openCuisineScreen}
-            onPaymentSubmit={this.openPaymentScreen}
-            onPaymentFail={this.onPaymentFail}
           />
         </ScrollView>
       </AppBase>
@@ -95,10 +84,7 @@ HomeScreen.defaultProps = {
 };
 
 HomeScreen.propTypes = {
-  fetchRestaurant: PropTypes.func.isRequired,
-  fetchRestaurantByType: PropTypes.func.isRequired,
   fetchCuisineTypes: PropTypes.func.isRequired,
-  // fetchCartItems: PropTypes.func.isRequired,
   restaurantList: PropTypes.array,
   cuisineTypes: PropTypes.array,
 };
@@ -112,10 +98,9 @@ function initMapStateToProps(state) {
 
 function initMapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchRestaurant,
-    fetchRestaurantByType,
+    // fetchRestaurant,
+    // fetchRestaurantByType,
     fetchCuisineTypes,
-    // fetchCartItems,
   }, dispatch);
 }
 
