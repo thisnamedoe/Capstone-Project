@@ -29,8 +29,6 @@ class LoginScreen extends Component {
   }
 
   async componentWillReceiveProps(nextProps, nextContext) {
-
-    console.log('here');
     await this.handleRedirect(nextProps.loginMessage);
   }
 
@@ -38,6 +36,7 @@ class LoginScreen extends Component {
   handleLoginSubmit = () => {
     const { email, password } = this.state;
     this.props.authLogin(email, password);
+
     this.props.cleanCart();
   };
 
@@ -54,7 +53,6 @@ class LoginScreen extends Component {
   };
 
   handleRedirect = (loginMessage) => {
-    console.log(loginMessage);
     if (loginMessage && loginMessage.token) {
       try {
         Actions.reset('drawer');

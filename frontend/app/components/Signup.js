@@ -62,7 +62,6 @@ class SignupComponent extends Component {
             marginRight: 'auto',
           }}
           underlineColorAndroid="#B9B9B9"
-          value=""
           secureTextEntry
           placeholder="Password"
         />
