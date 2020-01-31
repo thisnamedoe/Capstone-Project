@@ -91,11 +91,13 @@ const AppRouter = () => (
                     <Scene
                         key="paymentSuccess"
                         component={PaymentComplete}
+                        title="Restaurant App"
                     />
 
                     <Scene
                         key="paymentFailed"
                         component={PaymentFailed}
+                        title="Restaurant App"
                     />
                     <Scene
                         key="showAllOrders"
