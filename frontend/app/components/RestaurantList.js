@@ -87,14 +87,14 @@ class RestaurantList extends Component {
   renderRestaurantSection = () => (
     (this.props.restaurantList && this.props.restaurantList.length > 0)
       ?
-        <FlatList
-          data={this.props.restaurantList}
-          showsHorizontalScrollIndicator={false}
-          bounces={false}
-          ListHeaderComponent={this.renderHeader}
-          renderItem={this.renderRestaurantList}
-          keyExtractor={item => item._id}
-        />
+      <FlatList
+        data={this.props.restaurantList}
+        showsHorizontalScrollIndicator={false}
+        bounces={false}
+        ListHeaderComponent={this.renderHeader}
+        renderItem={this.renderRestaurantList}
+        keyExtractor={item => item._id}
+      />
       : this.renderEmptySection()
   );
 
