@@ -3,41 +3,61 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.mail import send_mail 
-from users.models import CustomUserManager, User
+from users.models import Customuser
+from django.utils.crypto import get_random_string
+import hashlib
 
 def create(request):
     _password = request.POST.get('password')
     _email = request.POST.get('email')
-    _restaurant = request.POST.get('restaurant')
+    #_restaurant = request.POST.get('restaurant')
     # other stuff too
     # create using function or modelname.objects.create(param1=x, param2 = y.....etc)
-    if _restaurant == 'yes':
-        newuser = CustomUserManager().create_restaurant_user(_email, _password)
-    else:
-        newuser = CustomUserManager().create_user(_email, _password)
+    #if _restaurant == 'yes':
+    #    newuser = CustomUserManager().create_restaurant_user(_email, _password)
+    #else:
+    #    newuser = CustomUserManager().create_user(_email, _password)
         #return HttpResponse(newuser.get('is_restaurant'))
     #email('user_email', 0)
-    return HttpResponse('user created '+newuser.email, status=201)
+    _salt = get_random_string(length=32)
+    password = hashlib.sha256(_password.encode()).hexdigest()
+    user = Customuser(email=_email, password=password)
+    user.save()
+    return JsonResponse({"status":"user created"}, status=201)
 
+def getuser(request):
+    _username = request.POST.get('email')
+    obj = Customuser.objects.get(email=_username)
+    return JsonResponse({"status":obj.password}, status=200, safe = False)
 
 def resetpass(request):
     # reset user password
     # use a hash based on a user's username+salt to generate a link, and we can use this to verify with an email that contains a link with the hash used in the user params (hash as well as the username should be in the link). (one time use links)
     _email = request.POST.get('email')
-    
-    return email(_email, 1)
+    _password = request.POST.get('password')
+    obj = Customuser.objects.get(email=_email)
+    obj.password = hashlib.sha256(_password.encode()).hexdigest()
+    obj.save()
+    return JsonResponse({"status":"success"}, status=200, safe = False)
 
 
 def delete(request):
     _username = request.POST.get('email')
     #get object
-    obj = User.objects.get(email=_username)
+    obj = Customuser.objects.get(email=_username)
 #    return HttpResponse(obj.is_restaurant)
     name = obj.delete()
-    return JsonResponse(name, status=200, safe = False)
+    return JsonResponse({"deleted":_username}, status=200, safe = False)
 
 def authenticate(request):
-    pass
+    _username = request.POST.get('email')
+    _password = request.POST.get('password')
+    checkpassword = hashlib.sha256(_password.encode()).hexdigest()
+    obj = Customuser.objects.get(email=_username)
+    if obj.password == checkpassword:
+        return JsonResponse({"status":"valid"}, status=200, safe = False)
+    else:
+        return JsonResponse({"status":"invalid"}, status=400, safe = False)
 
 def email(toemail, typeof):
     try:
