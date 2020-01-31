@@ -50,7 +50,7 @@ class SignupComponent extends Component {
             marginRight: 'auto',
           }}
           underlineColorAndroid="#B9B9B9"
-          placeholder="Username"
+          placeholder="Email"
         />
         <BR />
         <TextInput
