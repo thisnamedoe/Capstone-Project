@@ -21,7 +21,7 @@ const cuisines = [
   {
     id: '1',
     name: 'Noodles',
-    image: 'chinese',
+    image: 'noodles',
     price: '10.99',
   },
   {
