@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 import { authRegister } from '../../src/actions/index';
 import SignupComponent from '../components/Signup';
+import { Actions } from 'react-native-router-flux';
 
 class SignupScreen extends Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class SignupScreen extends Component {
 
   handleSignUpSubmit = () => {
     const { email, password } = this.state;
-    this.props.authRegister(email, password);
+    // this.props.authRegister(email, password);
+    Actions.loginScreen();
   };
 
   handleEmailChange = (email) => {
