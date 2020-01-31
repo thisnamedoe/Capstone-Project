@@ -11,19 +11,26 @@ function* loginTask(action) {
     });
     const { payload } = action;
 
-    const res = yield call(Auth.doLogin, payload.email, payload.password);
+    // const res = yield call(Auth.doLogin, payload.email, payload.password);
+    yield put({
+      type: 'AUTH_LOGIN_SUCCESS',
+      payload: {
+        "success": true,
+        "token": "xxxxxxxxxxxxxxxxxxxxxx",
+      }
+    })
 
-    if (res.status === 200) {
-      yield put({
-        type: 'AUTH_LOGIN_SUCCESS',
-        payload: res.data,
-      });
-    } else {
-      yield put({
-        type: 'AUTH_LOGIN_ERROR',
-        payload: res.data,
-      });
-    }
+    // if (res.status === 200) {
+    //   yield put({
+    //     type: 'AUTH_LOGIN_SUCCESS',
+    //     payload: res.data,
+    //   });
+    // } else {
+    //   yield put({
+    //     type: 'AUTH_LOGIN_ERROR',
+    //     payload: res.data,
+    //   });
+    // }
   } catch (e) {
     // console.log(e);
     const payload = typeof e === 'string' ? { message: e } : e.data;

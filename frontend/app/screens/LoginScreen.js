@@ -7,6 +7,7 @@ import { Actions } from 'react-native-router-flux';
 
 
 import { cleanCart } from '../../src/actions/cart';
+import { authLogin } from '../../src/actions/index'
 import LoginComponent from '../components/Login';
 
 class LoginScreen extends Component {
@@ -22,21 +23,22 @@ class LoginScreen extends Component {
 
   componentDidMount() {
     const { loginMessage } = this.props;
-    // if (loginMessage !== null && loginMessage.token && loginMessage.token.length > 10) {
-    //   Actions.reset('drawer');
-    // }
+    if (loginMessage !== null && loginMessage.token && loginMessage.token.length > 10) {
+      Actions.reset('drawer');
+    }
   }
 
   async componentWillReceiveProps(nextProps, nextContext) {
-    // await this.handleRedirect(nextProps.loginMessage);
+
+    console.log('here');
+    await this.handleRedirect(nextProps.loginMessage);
   }
 
 
   handleLoginSubmit = () => {
     const { email, password } = this.state;
-    // this.props.authLogin(email, password);
+    this.props.authLogin(email, password);
     this.props.cleanCart();
-    Actions.reset('drawer');
   };
 
   handleEmailChange = (email) => {
@@ -51,15 +53,16 @@ class LoginScreen extends Component {
     });
   };
 
-  // handleRedirect = (loginMessage) => {
-  //   if (loginMessage && loginMessage.token) {
-  //     try {
-  //       Actions.reset('drawer');
-  //     } catch (e) {
-  //       // console.log(e);
-  //     }
-  //   }
-  // };
+  handleRedirect = (loginMessage) => {
+    console.log(loginMessage);
+    if (loginMessage && loginMessage.token) {
+      try {
+        Actions.reset('drawer');
+      } catch (e) {
+        // console.log(e);
+      }
+    }
+  };
 
   render() {
     const { loginLoading, loginMessage } = this.props;
@@ -111,6 +114,7 @@ function initMapStateToProps(state) {
 function initMapDispatchToProps(dispatch) {
   return bindActionCreators({
     cleanCart,
+    authLogin,
   }, dispatch);
 }
 
