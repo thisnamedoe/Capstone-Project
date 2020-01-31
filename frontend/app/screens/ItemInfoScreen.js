@@ -42,6 +42,30 @@ const cuisines = [
     image: 'beverages',
     price: '5.99',
   },
+  {
+    id: '5',
+    name: 'Ice Cream',
+    image: 'ice-creams',
+    price: '4.99',
+  },
+  {
+    id: '6',
+    name: 'Taco',
+    image: 'taco',
+    price: '3.99',
+  },
+  {
+    id: '7',
+    name: 'Burger',
+    image: 'burger',
+    price: '5.99',
+  },
+  {
+    id: '8',
+    name: 'Salad',
+    image: 'salad',
+    price: '9.99',
+  },
 ]
 
 class ItemInfoScreen extends Component {
