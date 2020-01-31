@@ -22,19 +22,20 @@ class LoginScreen extends Component {
 
   componentDidMount() {
     const { loginMessage } = this.props;
-    if (loginMessage !== null && loginMessage.token && loginMessage.token.length > 10) {
-      Actions.reset('drawer');
-    }
+    // if (loginMessage !== null && loginMessage.token && loginMessage.token.length > 10) {
+    //   Actions.reset('drawer');
+    // }
   }
 
   async componentWillReceiveProps(nextProps, nextContext) {
-    await this.handleRedirect(nextProps.loginMessage);
+    // await this.handleRedirect(nextProps.loginMessage);
   }
 
 
   handleLoginSubmit = () => {
     const { email, password } = this.state;
-    this.props.authLogin(email, password);
+    // this.props.authLogin(email, password);
+    Actions.reset('drawer');
   };
 
   handleEmailChange = (email) => {
@@ -49,15 +50,15 @@ class LoginScreen extends Component {
     });
   };
 
-  handleRedirect = (loginMessage) => {
-    if (loginMessage && loginMessage.token) {
-      try {
-        Actions.reset('drawer');
-      } catch (e) {
-        // console.log(e);
-      }
-    }
-  };
+  // handleRedirect = (loginMessage) => {
+  //   if (loginMessage && loginMessage.token) {
+  //     try {
+  //       Actions.reset('drawer');
+  //     } catch (e) {
+  //       // console.log(e);
+  //     }
+  //   }
+  // };
 
   render() {
     const { loginLoading, loginMessage } = this.props;

@@ -38,7 +38,7 @@ class LoginComponent extends Component {
             marginLeft: 'auto',
             marginRight: 'auto',
           }}
-          defaultValue="Test@gmail.com"
+          // defaultValue="Test@gmail.com"
           underlineColorAndroid="#B9B9B9"
           placeholder="Email Address"
         />
@@ -51,7 +51,7 @@ class LoginComponent extends Component {
             marginLeft: 'auto',
             marginRight: 'auto',
           }}
-          defaultValue="test123"
+          // defaultValue="test123"
           underlineColorAndroid="#B9B9B9"
           secureTextEntry
           placeholder="Password"
