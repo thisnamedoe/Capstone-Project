@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Actions } from 'react-native-router-flux';
 
 
-import { authLogin } from '../../src/actions/index';
+import { cleanCart } from '../../src/actions/cart';
 import LoginComponent from '../components/Login';
 
 class LoginScreen extends Component {
@@ -35,6 +35,7 @@ class LoginScreen extends Component {
   handleLoginSubmit = () => {
     const { email, password } = this.state;
     // this.props.authLogin(email, password);
+    this.props.cleanCart();
     Actions.reset('drawer');
   };
 
@@ -96,7 +97,7 @@ LoginScreen.propTypes = {
   loginLoading: PropTypes.bool.isRequired,
   loginError: PropTypes.object,
   loginMessage: PropTypes.object,
-  authLogin: PropTypes.func.isRequired,
+  cleanCart: PropTypes.func.isRequired,
 };
 
 function initMapStateToProps(state) {
@@ -109,7 +110,7 @@ function initMapStateToProps(state) {
 
 function initMapDispatchToProps(dispatch) {
   return bindActionCreators({
-    authLogin,
+    cleanCart,
   }, dispatch);
 }
 

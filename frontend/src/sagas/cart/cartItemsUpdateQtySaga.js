@@ -7,8 +7,6 @@ import storage from 'redux-persist/lib/storage';
 const cartItemsSelector = state => state.cart.cartData;
 
 function* cartItemUpdateQty(action) {
-  console.log('here2');
-  console.log(action);
   try {
     const currentCart = yield select(cartItemsSelector);
 
