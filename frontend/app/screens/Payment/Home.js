@@ -47,21 +47,21 @@ const SectionItem = styled.View`
 `;
 
 class PaymentHome extends Component {
-  static navigationOptions = {
-    title: (<PrimaryText style={{ flex: 1 }}> Make Payment</PrimaryText>),
-    headerStyle: {
-      backgroundColor: '#f5f5f5',
-      borderBottomWidth: 1,
-      borderStyle: 'solid',
-      borderColor: '#fcfcfc',
-    },
-    headerTintColor: '#000',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-    headerBackTitle: 'Home',
-    headerLeft: null,
-  };
+  // static navigationOptions = {
+  //   title: (<PrimaryText style={{ flex: 1 }}> Make Payment</PrimaryText>),
+  //   headerStyle: {
+  //     backgroundColor: '#f5f5f5',
+  //     borderBottomWidth: 1,
+  //     borderStyle: 'solid',
+  //     borderColor: '#fcfcfc',
+  //   },
+  //   headerTintColor: '#000',
+  //   headerTitleStyle: {
+  //     fontWeight: 'bold',
+  //   },
+  //   headerBackTitle: 'Home',
+  //   headerLeft: null,
+  // };
 
   constructor(props) {
     super(props);
@@ -126,8 +126,8 @@ class PaymentHome extends Component {
   };
 
   render() {
-    const { orderId, totalAmount } = this.props;
-
+    const { totalAmount } = this.props;
+    console.log('here', totalAmount);
     return (
       <AppBase>
 
@@ -140,19 +140,19 @@ class PaymentHome extends Component {
             <BR size={10} />
             <Section>
               <SectionItem>
-                <Heading>{'Order Id'.toUpperCase()}</Heading>
-                <SubHeading>{orderId}</SubHeading>
+                <Heading>Order ID</Heading>
+                <SubHeading>1</SubHeading>
               </SectionItem>
             </Section>
 
             <Section>
               <SectionItem>
-                <Heading>SELLER</Heading>
-                <SubHeading>Restaurant App</SubHeading>
+                <Heading>Restaurant</Heading>
+                <SubHeading>SE 4450</SubHeading>
               </SectionItem>
               <SectionItem>
-                <Heading>PRICE</Heading>
-                <SubHeading>₹ {totalAmount}</SubHeading>
+                <Heading>Price</Heading>
+                <SubHeading>${totalAmount.toFixed(2)}</SubHeading>
               </SectionItem>
             </Section>
 
@@ -175,25 +175,13 @@ class PaymentHome extends Component {
               <CreditCardInput
                 requiresCVC
                 cardScale={1}
-                inputContainerStyle={{
-                  backgroundColor: '#FFF',
-                  paddingTop: 15,
-                  paddingBottom: 5,
-                  flexDirection: 'column',
-                  paddingLeft: 20,
-                  paddingRight: 20,
-                  borderWidth: 1,
-                  borderColor: '#eee',
-                  minWidth: 150,
-                  borderRadius: 6,
-                }}
                 onChange={debounce(this._onChange, 500)}
               />
             </View>
 
             <RoundButton
               loading={this.state.loadingPayment}
-              title="Make Payment"
+              title="Pay Bill"
               buttonColor={Colors.green}
               onPress={() => this.doPayment()}
               disabled={!this.state.validData}
@@ -204,8 +192,9 @@ class PaymentHome extends Component {
             />
 
             <RoundButton
-              title="Cancel Order"
+              title="Split Bill"
               onPress={() => this.handleCancelOrder()}
+              buttonColor={Colors.blue}
               baseStyle={{
                 marginTop: 30,
                 marginBottom: Platform.OS === 'ios' ? 100 : 20,
@@ -224,7 +213,6 @@ PaymentHome.defaultProps = {
 };
 
 PaymentHome.propTypes = {
-  orderId: PropTypes.string.isRequired,
   totalAmount: PropTypes.number.isRequired,
   doCancelOrder: PropTypes.func.isRequired,
   createdOrder: PropTypes.object,

@@ -14,7 +14,7 @@ import BR from '../base_components/BR';
 import ViewRow from '../base_components/ViewRow';
 import PrimaryText from '../base_components/PrimaryText';
 import { deleteCartItem, fetchCartItems, updateCartItemQty } from '../../src/actions/cart';
-import { createOrder } from '../../src/actions';
+import { createOrder } from '../../src/actions/index';
 
 
 const FooterContainer = styled.View`
@@ -55,15 +55,15 @@ class CartScreen extends Component {
     this.props.fetchCartItems();
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.createdOrder !== null) {
-      const { createdOrder } = nextProps;
-      Actions.paymentHome({
-        orderId: createdOrder.id,
-        totalAmount: createdOrder.totalCost,
-      });
-    }
-  }
+  // componentWillReceiveProps(nextProps, nextContext) {
+  //   if (nextProps.createdOrder !== null) {
+  //     const { createdOrder } = nextProps;
+  //     Actions.paymentHome({
+  //       orderId: createdOrder.id,
+  //       totalAmount: createdOrder.totalCost,
+  //     });
+  //   }
+  // }
 
   handleItemValueChange = (item, qty) => {
     if (qty === 0) {
@@ -74,6 +74,7 @@ class CartScreen extends Component {
   };
 
   handlePayment = (totalAmount) => {
+    console.log(totalAmount);
     const { cartData } = this.props;
 
     if (cartData.length > 0) {
@@ -83,7 +84,9 @@ class CartScreen extends Component {
         price: item.price,
       }));
 
-      this.props.createOrder(postData, totalAmount);
+      Actions.paymentHome({
+        totalAmount: parseFloat(totalAmount),
+      });
     }
   };
 
@@ -169,7 +172,8 @@ class CartScreen extends Component {
     const tipPercent = 15;
 
     const tax = +(totalBill * (taxPercent / 100)).toFixed(2);
-
+    const tipTotal = (totalBill * (tipPercent / 100)).toFixed(2);
+    const overallTotal = totalBill + tax + tipTotal;
     const billInfo = [
       {
         name: 'Items Total',
@@ -181,11 +185,10 @@ class CartScreen extends Component {
       },
       {
         name: `Tip (${tipPercent}%)`,
-        total: (totalBill * tipPercent).toFixed(2),
+        total: tipTotal,
       },
     ];
 
-    totalBill += (tax + 30) - 18;
 
     return (
       <AppBase
@@ -200,7 +203,7 @@ class CartScreen extends Component {
           {this.renderBillReceipt(billInfo)}
           <BR />
         </ScrollView>
-        {this.renderFooter(totalBill)}
+        {this.renderFooter(overallTotal)}
       </AppBase>
     );
   }
