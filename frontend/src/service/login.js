@@ -7,6 +7,7 @@ function doLogin(email, password) {
     password,
   };
   return request({ url: LOGIN_URL, method: 'POST', data });
+
 }
 
 function doRegister(email, password) {
