@@ -37,7 +37,7 @@ const AmountContainer = styled.View`
 const PayButton = styled.TouchableOpacity`
   height: 100%;
   background-color: green;
-  flex: 0.5;
+  flex: 1;
   justify-content: center;
   align-items: center;
 `;
@@ -46,6 +46,7 @@ const FooterText = styled(PrimaryText)`
   font-weight: bold;
   color: #eee;
   font-size: 16px;
+  width: 100%;
 `;
 
 
@@ -58,7 +59,7 @@ class CartScreen extends Component {
     if (nextProps.createdOrder !== null) {
       const { createdOrder } = nextProps;
       Actions.paymentHome({
-        orderId: createdOrder._id,
+        orderId: createdOrder.id,
         totalAmount: createdOrder.totalCost,
       });
     }
@@ -66,9 +67,9 @@ class CartScreen extends Component {
 
   handleItemValueChange = (item, qty) => {
     if (qty === 0) {
-      this.props.deleteCartItem(item._id);
+      this.props.deleteCartItem(item.id);
     } else {
-      this.props.updateCartItemQty(item._id, qty);
+      this.props.updateCartItemQty(item.id, qty);
     }
   };
 
@@ -77,7 +78,7 @@ class CartScreen extends Component {
 
     if (cartData.length > 0) {
       const postData = cartData.map(item => ({
-        id: item.food._id,
+        id: item.id,
         quantity: item.qty,
         price: item.price,
       }));
@@ -86,15 +87,15 @@ class CartScreen extends Component {
     }
   };
 
-  _renderItem = ({ item }) => (
-    <Item
-      key={item._id}
-      name={item.food.name}
-      price={`₹${item.price * item.qty}`}
+  renderItem = ({ item }) => {
+    return (<Item
+      key={item.id}
+      name={item.name}
+      price={`$${item.price * item.qty}`}
       qty={item.qty}
       onChange={qty => this.handleItemValueChange(item, qty)}
-    />
-  );
+    />);
+  };
 
   renderCartItems = (cartData) => {
     if (cartData.length > 0) {
@@ -106,8 +107,8 @@ class CartScreen extends Component {
             borderColor: '#fcfcfc',
           }}
           data={cartData}
-          renderItem={this._renderItem}
-          keyExtractor={item => item._id}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.id}
         />
       );
     }
@@ -144,9 +145,6 @@ class CartScreen extends Component {
     if (cartData.length > 0) {
       return (
         <FooterContainer>
-          <AmountContainer>
-            <PrimaryText>₹ {totalAmount}</PrimaryText>
-          </AmountContainer>
           <PayButton
             onPress={() => this.handlePayment(totalAmount)}
           >
@@ -162,12 +160,13 @@ class CartScreen extends Component {
 
   render() {
     const { cartData } = this.props;
-
     let totalBill = parseFloat(cartData.reduce(
       (total, item) => total + (item.price * item.qty),
       0,
-    ));
-    const taxPercent = 8;
+    )).toFixed(2);
+
+    const taxPercent = 13;
+    const tipPercent = 15;
 
     const tax = +(totalBill * (taxPercent / 100)).toFixed(2);
 
@@ -177,16 +176,12 @@ class CartScreen extends Component {
         total: totalBill,
       },
       {
-        name: 'Offer Discount',
-        total: -18,
-      },
-      {
         name: `Taxes (${taxPercent}%)`,
         total: tax,
       },
       {
-        name: 'Delivery Charges',
-        total: 30,
+        name: `Tip (${tipPercent}%)`,
+        total: (totalBill * tipPercent).toFixed(2),
       },
     ];
 

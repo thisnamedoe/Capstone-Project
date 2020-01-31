@@ -33,7 +33,7 @@ function* restaurantTask(action) {
       });
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     yield put({
       type: 'FETCH_RESTAURANT_ERROR',
       payload: e.data,

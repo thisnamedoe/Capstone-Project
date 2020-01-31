@@ -35,23 +35,23 @@ const ButtonWrap = styled.View`
 const FlatButton = ({
   fontSize, title, onPress, color, darkTheme, style,
 }) => (
-  <Ripple
-    rippleCentered
-    onPress={onPress}
-    rippleDuration={400}
-    rippleColor={darkTheme ? WHITE : DARK_VIOLET}
-  >
-    <ButtonWrap style={style}>
-      <ButtonText
-        style={{
-          fontSize,
-          color: color || (darkTheme ? PALE_BLUE : DARK_VIOLET),
-        }}
-      >{title.toUpperCase()}
-      </ButtonText>
-    </ButtonWrap>
-  </Ripple>
-);
+    <Ripple
+      rippleCentered
+      onPress={onPress}
+      rippleDuration={400}
+      rippleColor={darkTheme ? WHITE : DARK_VIOLET}
+    >
+      <ButtonWrap style={style}>
+        <ButtonText
+          style={{
+            fontSize,
+            color: color || (darkTheme ? PALE_BLUE : DARK_VIOLET),
+          }}
+        >{title.toUpperCase()}
+        </ButtonText>
+      </ButtonWrap>
+    </Ripple>
+  );
 
 FlatButton.defaultProps = {
   color: null,

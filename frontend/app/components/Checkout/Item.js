@@ -35,16 +35,16 @@ const PriceText = styled.Text`
 const Item = ({
   name, price, onChange, qty,
 }) => (
-  <Container>
-    <NameView>
-      <PrimaryText size={14} align="left">{name}</PrimaryText>
-    </NameView>
-    <RightSection>
-      <CounterButton onChange={onChange} qty={qty} />
-      <PriceText>{price}</PriceText>
-    </RightSection>
-  </Container>
-);
+    <Container>
+      <NameView>
+        <PrimaryText size={14} align="left">{name}</PrimaryText>
+      </NameView>
+      <RightSection>
+        <CounterButton onChange={onChange} qty={qty} />
+        <PriceText>{price}</PriceText>
+      </RightSection>
+    </Container>
+  );
 
 Item.propTypes = {
   name: PropTypes.string.isRequired,

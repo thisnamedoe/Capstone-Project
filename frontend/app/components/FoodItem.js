@@ -14,16 +14,12 @@ import FlatButton from '../base_components/FlatButton';
 class FoodItem extends React.Component {
   render() {
     const { food, onPress } = this.props;
-    const { food: info } = food;
-    if (!info) {
-      return <LoadingFood />;
-    }
     return (
       <TouchableOpacity
         activeOpacity={0.6}
       >
         <View
-          key={food._id}
+          key={food.id}
           style={{
             elevation: 3,
             minHeight: 220,
@@ -38,7 +34,7 @@ class FoodItem extends React.Component {
           }}
         >
           <Image
-            source={Assets.Images.placeholderFood}
+            source={Assets.Images[food.image]}
             style={{
               width: '100%',
               height: 150,
@@ -59,10 +55,10 @@ class FoodItem extends React.Component {
               }}
             >
               <PrimaryText size={18} align="left" style={{ marginBottom: 5 }}>
-                {info.name}
+                {food.name}
               </PrimaryText>
               <SecondaryText>
-                {info.type}
+                {food.description}
               </SecondaryText>
             </View>
             <View
@@ -71,7 +67,7 @@ class FoodItem extends React.Component {
               }}
             >
               <PrimaryText size={20} color={Colors.moneyColor}>
-                &#8377; {food.price}
+                $ {food.price}
               </PrimaryText>
             </View>
           </ViewRow>

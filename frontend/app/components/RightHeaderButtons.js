@@ -25,18 +25,13 @@ class RightHeaderButtons extends Component {
   };
 
   render() {
-    const { loginMessage } = this.props;
-
-    if (loginMessage === null || !loginMessage.token) {
-      return null;
-    }
     return (
       <ViewRow
         jc="flex-end"
         ai="center"
       >
         <RippleIcon
-          name="ios-cart-outline"
+          name="ios-cart"
           dark
           size={20}
           onPress={() => Actions.cartScreen()}

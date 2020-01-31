@@ -27,7 +27,7 @@ function* restaurantTask(action) {
       });
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     yield put({
       type: `${actionType}ERROR`,
       payload: e.data,

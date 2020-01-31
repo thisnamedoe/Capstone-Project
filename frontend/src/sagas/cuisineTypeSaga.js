@@ -27,7 +27,7 @@ function* cuisineTypeTask(action) {
       });
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     yield put({
       type: 'FETCH_CUISINE_TYPE_ERROR',
       payload: e.data,

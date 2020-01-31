@@ -7,11 +7,13 @@ import storage from 'redux-persist/lib/storage';
 const cartItemsSelector = state => state.cart.cartData;
 
 function* cartItemUpdateQty(action) {
+  console.log('here2');
+  console.log(action);
   try {
     const currentCart = yield select(cartItemsSelector);
 
     const newCart = currentCart.map((obj) => {
-      if (obj._id === action.payload.foodId) {
+      if (obj.id === action.payload.foodId) {
         const newObj = obj;
         newObj.qty = action.payload.qty;
         return newObj;
@@ -22,7 +24,7 @@ function* cartItemUpdateQty(action) {
     yield call(storage.setItem, 'userCart', JSON.stringify(newCart));
     yield put({ type: 'SAVE_NEW_CART', payload: newCart });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 }
 

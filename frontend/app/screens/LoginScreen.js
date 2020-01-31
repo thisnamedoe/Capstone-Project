@@ -22,10 +22,9 @@ class LoginScreen extends Component {
 
   componentDidMount() {
     const { loginMessage } = this.props;
-    // if (loginMessage !== null && loginMessage.token && loginMessage.token.length > 10) {
-    //   Actions.reset('drawer');
-    // }
-    Actions.reset('drawer');
+    if (loginMessage !== null && loginMessage.token && loginMessage.token.length > 10) {
+      Actions.reset('drawer');
+    }
   }
 
   async componentWillReceiveProps(nextProps, nextContext) {
@@ -35,8 +34,7 @@ class LoginScreen extends Component {
 
   handleLoginSubmit = () => {
     const { email, password } = this.state;
-    // this.props.authLogin(email, password);
-    Actions.reset('drawer');
+    this.props.authLogin(email, password);
   };
 
   handleEmailChange = (email) => {
@@ -52,13 +50,13 @@ class LoginScreen extends Component {
   };
 
   handleRedirect = (loginMessage) => {
-    Actions.reset('drawer');
-    // if (loginMessage && loginMessage.token) {
-    //   try {
-    //     Actions.reset('drawer');
-    //   } catch (e) {
-    //   }
-    // }
+    if (loginMessage && loginMessage.token) {
+      try {
+        Actions.reset('drawer');
+      } catch (e) {
+        // console.log(e);
+      }
+    }
   };
 
   render() {
@@ -71,6 +69,7 @@ class LoginScreen extends Component {
 
     const { email, password } = this.state;
 
+    // eslint-disable-next-line react/prop-types
     loginError = loginError || this.props.navigation.state.params.loginError;
 
     const disableLogin = (!email || email.length === 0 || !password || password.length === 0);
@@ -99,16 +98,6 @@ LoginScreen.propTypes = {
   authLogin: PropTypes.func.isRequired,
 };
 
-
-
-// export default LoginScreen;
-
-
-
-
-
-
-
 function initMapStateToProps(state) {
   return {
     loginError: state.auth.loginError,
@@ -123,5 +112,5 @@ function initMapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-
+// export default LoginScreen;
 export default connect(initMapStateToProps, initMapDispatchToProps)(LoginScreen);

@@ -7,7 +7,6 @@ import { FlatList, Image, ScrollView, View } from 'react-native';
 
 import AppBase from '../base_components/AppBase';
 import PrimaryText from '../base_components/PrimaryText';
-import { fetchRestaurant } from '../../src/actions/index';
 import SecondaryText from '../base_components/SecondaryText';
 import Assets from '../../src/constants/assets';
 import FoodItem from '../components/FoodItem';
@@ -16,24 +15,52 @@ import BR from '../base_components/BR';
 import { updateCartItems } from '../../src/actions/cart';
 import SignOutButton from '../components/RightHeaderButtons';
 
-class RestaurantInfoScreen extends Component {
+const restaurantName = 'SE 4450 Restaurant'
+
+const cuisines = [
+  {
+    id: '1',
+    name: 'Noodles',
+    image: 'chinese',
+    price: '10.99',
+  },
+  {
+    id: '2',
+    name: 'Pizza',
+    image: 'pizza',
+    price: '8.99',
+  },
+  {
+    id: '3',
+    name: 'Cupcake',
+    image: 'desserts',
+    price: '3.99',
+  },
+  {
+    id: '4',
+    name: 'Martini',
+    image: 'beverages',
+    price: '5.99',
+  },
+]
+
+class ItemInfoScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerRight: <SignOutButton />,
   });
 
   componentDidMount() {
-    this.props.fetchRestaurant();
   }
 
-  renderFoodList = foods => (
-    <FlatList
-      data={foods}
+  renderFoodList = () => {
+    return (<FlatList
+      data={cuisines}
       bounces={false}
       ListHeaderComponent={this.renderHeader}
-      keyExtractor={item => item._id}
+      keyExtractor={item => item.id}
       renderItem={this.renderFoodItem}
-    />
-  );
+    />);
+  };
 
   renderHeader = () => (
     <ViewRow
@@ -50,8 +77,7 @@ class RestaurantInfoScreen extends Component {
         style={{
           flex: 1,
         }}
-        size={20}
-      >
+        size={20}>
         Menu
       </PrimaryText>
     </ViewRow>
@@ -70,7 +96,7 @@ class RestaurantInfoScreen extends Component {
   };
 
   render() {
-    const { restaurant: { name: restaurantName, details, foods } } = this.props;
+    const { data } = this.props;
     return (
       <AppBase
         style={{
@@ -95,36 +121,30 @@ class RestaurantInfoScreen extends Component {
           >
             <PrimaryText align="left" size={24}>{restaurantName}</PrimaryText>
             <BR size={5} />
-            <SecondaryText align="left" size={16}>{details}</SecondaryText>
+            {/* <SecondaryText align="left" size={16}>{details}</SecondaryText> */}
           </View>
-          {this.renderFoodList(foods)}
+          {this.renderFoodList(data)}
         </ScrollView>
       </AppBase>
     );
   }
 }
 
-RestaurantInfoScreen.defaultProps = {};
+ItemInfoScreen.defaultProps = {};
 
-RestaurantInfoScreen.propTypes = {
-  fetchRestaurant: PropTypes.func.isRequired,
+ItemInfoScreen.propTypes = {
   updateCartItems: PropTypes.func.isRequired,
-  // authLogout: PropTypes.func.isRequired,
-  restaurant: PropTypes.object.isRequired,
 };
 
 function initMapStateToProps(state) {
   return {
-    restaurantList: state.restaurant.fullList,
   };
 }
 
 function initMapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchRestaurant,
     updateCartItems,
-    // authLogout,
   }, dispatch);
 }
 
-export default connect(initMapStateToProps, initMapDispatchToProps)(RestaurantInfoScreen);
+export default connect(initMapStateToProps, initMapDispatchToProps)(ItemInfoScreen);

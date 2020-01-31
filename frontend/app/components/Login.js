@@ -16,7 +16,7 @@ import Colors from '../../src/constants/colors';
 class LoginComponent extends Component {
   render() {
     const {
-      loading, onLoginSubmit, onEmailChange, onPasswordChange, loginError, disableLogin,
+      loading, onLoginSubmit, onEmailChange, onPasswordChange, disableLogin,
     } = this.props;
 
     return (
@@ -25,9 +25,9 @@ class LoginComponent extends Component {
           justifyContent: 'center',
         }}
       >
-        <PrimaryText bold size={26}>Group 13 Restaurant App</PrimaryText>
+        <PrimaryText bold size={26}>Capstone</PrimaryText>
         <BR size={50} />
-        {loginError && <PrimaryText>{loginError.message}</PrimaryText>}
+        {/* {loginError && <PrimaryText>{loginError.message}</PrimaryText>} */}
         <BR size={50} />
 
         <TextInput
@@ -38,6 +38,7 @@ class LoginComponent extends Component {
             marginLeft: 'auto',
             marginRight: 'auto',
           }}
+          defaultValue="Test@gmail.com"
           underlineColorAndroid="#B9B9B9"
           placeholder="Email Address"
         />
@@ -50,6 +51,7 @@ class LoginComponent extends Component {
             marginLeft: 'auto',
             marginRight: 'auto',
           }}
+          defaultValue="test123"
           underlineColorAndroid="#B9B9B9"
           secureTextEntry
           placeholder="Password"
@@ -87,7 +89,7 @@ LoginComponent.defaultProps = {
 LoginComponent.propTypes = {
   disableLogin: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  loginError: PropTypes.object,
+  // loginError: PropTypes.object,
   onEmailChange: PropTypes.func.isRequired,
   onPasswordChange: PropTypes.func.isRequired,
   onLoginSubmit: PropTypes.func.isRequired,

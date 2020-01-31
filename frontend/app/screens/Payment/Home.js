@@ -108,7 +108,7 @@ class PaymentHome extends Component {
       address_zip: cardValue.postalCode,
     });
 
-    console.log(token);
+    // console.log(token);
 
     if (token) {
       Actions.paymentSuccess({

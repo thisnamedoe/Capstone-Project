@@ -11,7 +11,7 @@ const displayPaymentModal = (props, onSubmit) => {
     name: `Pay Rs.${props.orderTotal}`,
     description: `Order: ${props.orderId}`,
     token: (token) => {
-      console.log(token);
+      // console.log(token);
       if (token && token.id) {
         onSubmit && onSubmit({
           tokenId: token.id,

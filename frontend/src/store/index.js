@@ -1,6 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import reduxLogger from 'redux-logger';
+// import reduxLogger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
@@ -24,7 +24,7 @@ const sagaMiddleware = createSagaMiddleware();
 // create a redux store with our reducer above and middleware
 const store = createStore(
   pReducer,
-  applyMiddleware(reduxLogger, sagaMiddleware),
+  applyMiddleware(sagaMiddleware),
 );
 
 // run the saga

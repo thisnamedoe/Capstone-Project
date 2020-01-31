@@ -6,7 +6,7 @@ import LoginScreen from './app/screens/LoginScreen';
 import HomeScreen from './app/screens/HomeScreen';
 import Colors from './src/constants/colors';
 import SignupScreen from './app/screens/SignupScreen';
-import RestaurantInfoScreen from './app/screens/RestaurantInfoScreen';
+import ItemInfoScreen from './app/screens/ItemInfoScreen';
 import CuisineRestaurantsScreen from './app/screens/CuisineRestaurantsScreen';
 import CartScreen from './app/screens/CartScreen';
 import PaymentHome from './app/screens/Payment/Home';
@@ -41,26 +41,30 @@ const AppRouter = () => (
                 drawerWidth={300}
             >
                 <Scene>
-                    <Scene
+                    {/* <Scene
                         key="homeScreen"
                         component={HomeScreen}
                         title="Restaurant App"
                         titleStyle={{
                             color: Colors.primaryColor,
                         }}
-                    />
+                    /> */}
 
-                    <Scene
+                    {/* <Scene
                         key="cuisineRestaurants"
                         component={CuisineRestaurantsScreen}
                         titleStyle={{
                             color: Colors.primaryColor,
                         }}
-                    />
+                    /> */}
 
                     <Scene
-                        key="restaurantScreen"
-                        component={RestaurantInfoScreen}
+                        key="itemScreen"
+                        component={ItemInfoScreen}
+                        title="Restaurant App"
+                        titleStyle={{
+                            color: Colors.primaryColor,
+                        }}
                     />
 
                     <Scene

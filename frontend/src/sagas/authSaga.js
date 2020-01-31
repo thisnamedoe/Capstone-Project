@@ -25,7 +25,7 @@ function* loginTask(action) {
       });
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     const payload = typeof e === 'string' ? { message: e } : e.data;
     yield put({
       type: 'AUTH_LOGIN_ERROR',
@@ -56,7 +56,7 @@ function* registerTask(action) {
       });
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     const payload = typeof e === 'string' ? { message: e } : e.data;
     yield put({
       type: 'AUTH_REGISTER_ERROR',
