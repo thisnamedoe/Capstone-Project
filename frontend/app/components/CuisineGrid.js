@@ -4,8 +4,7 @@ import { FlatList, Image, TouchableOpacity, View } from 'react-native';
 import PropTypes from 'prop-types';
 import startCase from 'lodash/startCase';
 
-import AppBase from '../base_components/AppBase';
-import RoundButton from '../base_components/RoundButton';
+
 import Assets from '../../src/constants/assets';
 import PrimaryText from '../base_components/PrimaryText';
 import ViewRow from '../base_components/ViewRow';
@@ -28,9 +27,8 @@ class CuisineGrid extends Component {
         align="left"
         style={{
           flex: 1,
-        }}
-      >
-        Cuisine
+        }}>
+        Menu
       </PrimaryText>
     </ViewRow>);
 
@@ -60,7 +58,7 @@ class CuisineGrid extends Component {
         }}
       >
         <Image
-          source={Assets.Images[item]}
+          source={Assets.Images[item.image]}
           style={{
             width: 100,
             height: 100,
@@ -88,7 +86,7 @@ class CuisineGrid extends Component {
           marginTop: 20,
         }}
         >
-          {startCase(item)}
+          {startCase(item.name)}
         </PrimaryText>
       </View>
     </TouchableOpacity>
@@ -96,17 +94,13 @@ class CuisineGrid extends Component {
 
   render() {
     return (
-      <AppBase>
-        <FlatList
-          numColumns={2}
-          ListHeaderComponent={this.renderHeader}
-          data={this.props.data}
-          keyExtractor={item => item}
-          renderItem={this.renderItem}
-        />
-      </AppBase>
-
-
+      <FlatList
+        numColumns={2}
+        ListHeaderComponent={this.renderHeader}
+        data={this.props.data}
+        keyExtractor={item => item}
+        renderItem={this.renderItem}
+      />
     );
   }
 }

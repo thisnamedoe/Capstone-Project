@@ -13,7 +13,7 @@ function* cartItemsFetch(action) {
       payload: JSON.parse(response) || [],
     });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     yield put({
       type: 'SAVE_NEW_CART',
       payload: {

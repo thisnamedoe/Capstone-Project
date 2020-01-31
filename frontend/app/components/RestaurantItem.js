@@ -13,7 +13,7 @@ const RestaurantItem = ({ restaurant, onPress }) => (
     activeOpacity={0.6}
   >
     <View
-      key={restaurant._id}
+      key={restaurant.id}
       style={{
         width: '100%',
         minHeight: 220,

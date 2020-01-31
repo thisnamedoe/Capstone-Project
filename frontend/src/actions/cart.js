@@ -2,10 +2,10 @@ export const fetchCartItems = () => ({
   type: 'FETCH_CART_ITEMS',
 });
 
-export const updateCartItems = (data, qty) => ({
+export const updateCartItems = (item, qty) => ({
   type: 'UPDATE_CART_ITEMS',
   payload: {
-    ...data,
+    ...item,
     qty,
   },
 });

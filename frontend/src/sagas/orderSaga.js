@@ -27,7 +27,7 @@ function* orderFetchTask(action) {
       });
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     yield put({
       type: 'FETCH_ORDERS_ERROR',
       payload: e.data,
@@ -58,7 +58,7 @@ function* orderTask(action) {
       });
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     yield put({
       type: 'CREATE_ORDER_ERROR',
       payload: e.data,

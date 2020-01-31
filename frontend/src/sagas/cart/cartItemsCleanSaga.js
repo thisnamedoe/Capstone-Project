@@ -9,7 +9,7 @@ function* cartItemsClean(action) {
 
     yield put({ type: 'SAVE_NEW_CART', payload: newCart });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 }
 

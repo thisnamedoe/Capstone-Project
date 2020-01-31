@@ -24,11 +24,4 @@ export default class App extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-  },
-});
-
-AppRegistry.registerComponent('loginAnimation', () => loginAnimation);
+AppRegistry.registerComponent('RestaurantApp', () => App);
