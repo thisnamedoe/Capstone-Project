@@ -9,54 +9,59 @@ def create(request):
 
     M = Menu(restaurant_name=_restaurant_name)
     M.save()
-    return JsonResponse({"success":True}, status=201)
+    return JsonResponse({"success":True, "id":M.id}, status=200)
 
-def get(request):
-    _restaurant_name = request.POST.get('restaurant_name')
-    obj = Menu.objects.get(restaurant_name=_restaurant_name)
-    return JsonResponse({"menu":obj.restaurant_name, "items":obj.food_items}, status=201, safe=False)
+def get(request):#######list(SomeModel.objects.values())
+    _id = request.POST.get('restaurant_id')
+    obj = Menu.objects.get(id=_id)
+    return JsonResponse({"id":obj.id,"name": obj.restaurant_name, "menu":obj.restaurant_name, "items":list(obj.food_items.values()), "tables":list(obj.tables.values())}, status=200)
 
 def getmenuitem(request):
-    name = request.POST.get('name')
-    obj = MenuItem.objects.get(name=name)
-    return JsonResponse({"name": obj.name, "description":obj.description,"price":obj.price,"image":obj.image}, status=201)
+    _id = request.POST.get('id')
+    obj = MenuItem.objects.get(id=_id)
+    return JsonResponse({"id":obj.id,"name": obj.name, "description":obj.description,"price":obj.price,"image":obj.image}, status=200)
 
 def delete(request):
-    getname = request.POST.get('name')
-    obj = Menu.objects.get(name=getname)
+    _id = request.POST.get("id")
+    obj = Menu.objects.get(id=_id)
     name = obj.delete()
-    return JsonResponse({"deleted":name}, status=200, safe = False)
+    return JsonResponse({"deleted":restaurant_name}, status=200)
 
 def addmenuitem(request):
+    restaurant_id = request.POST.get('restaurant_id')
     name = request.POST.get('name')
     description = request.POST.get('description')
     price = request.POST.get('price')
     image = request.POST.get('image')
     MI = MenuItem(name=name,description=description,price=price,image=image)
     MI.save()
-    return JsonResponse({"item added":name}, status=201)
+    menu = Menu.objects.get(id = restaurant_id)
+    menu.food_items.add(MI)
+    return JsonResponse({"id": MI.id,"item":MI.name, "restaurant_id": restaurant_id}, status=200)
 
 def removemenuitem(request):
-    getname = request.POST.get('name')
-    obj = MenuItem.objects.get(name=getname)
+    restaurant_id = request.POST.get('restaurant_id')
+    menu = Menu.objects.get(id = restaurant_id)
+    _id = request.POST.get('item_id')
+    obj = MenuItem.objects.get(id=_id)
+    menu.food_items.remove(obj)
     name = obj.delete()
-    return JsonResponse({"deleted":getname}, status=200, safe = False)
+    return JsonResponse({"deleted":name}, status=200)
 
 def addtable(request):
-    restname = request.POST.get('restaurant_name')
-    menu = Menu.objects.get(restaurant_name=restname)
+    _id = request.POST.get('restaurant_id')
+    menu = Menu.objects.get(id=_id)
     tablenum = menu.tables.all().count()
-    table = Table(name = restname+'_' +str(tablenum))
+    table = Table(name = menu.restaurant_name+'_' +str(tablenum))
     table.save()
     menu.tables.add(table)
-    data = menu.tables.all()
-    a = list(data)
-    return JsonResponse(a,safe=False)
+    return JsonResponse({"table_id": table.id,"tablestring":table.name, "restaurant_id": menu.id}, status=200)
     
-def gettables(request):
-    restname = request.POST.get('restaurant_name')
-    menu = Menu.objects.get(restaurant_name=restname)
-    data = menu.tables.all()
-    for item in data:
-        item['product'] = model_to_dict(item['product'])
-    data = serializers.serialize('json', menu.tables.all())
+def deletetable(request):
+    _id = request.POST.get('restaurant_id')
+    tableid = request.POST.get('table_id')
+    menu = Menu.objects.get(id=_id)
+    table = Table.objects.get(id= _id)
+    menu.tables.remove(table)
+    name = table.delete()
+    return JsonResponse({"deleted":name}, status=200)
