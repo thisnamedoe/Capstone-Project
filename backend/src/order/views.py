@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+from order.models import order
+from django.http import JsonResponse
 # Create your views here.
 
 def create(request):

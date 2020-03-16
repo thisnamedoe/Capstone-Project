@@ -46,7 +46,7 @@ def addtable(request):
     restname = request.POST.get('restaurant_name')
     menu = Menu.objects.get(restaurant_name=restname)
     tablenum = menu.tables.all().count()
-    table = Table(name = restname+'_'+str(tablenum))
+    table = Table(name = restname+'_' +str(tablenum))
     table.save()
     menu.tables.add(table)
     data = menu.tables.all()

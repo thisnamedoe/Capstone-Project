@@ -10,6 +10,7 @@ import hashlib
 def create(request):
     _password = request.POST.get('password')
     _email = request.POST.get('email')
+    _isRestaurant = request.POST.get('isRestaurant')
     #_restaurant = request.POST.get('restaurant')
     # other stuff too
     # create using function or modelname.objects.create(param1=x, param2 = y.....etc)
@@ -21,14 +22,14 @@ def create(request):
     #email('user_email', 0)
     _salt = get_random_string(length=32)
     password = hashlib.sha256(_password.encode()).hexdigest()
-    user = Customuser(email=_email, password=password)
+    user = Customuser(email=_email, password=password, isRestaurant= _isRestaurant)
     user.save()
-    return JsonResponse({"status":"user created"}, status=201)
+    return JsonResponse({"success":True}, status=200)
 
 def getuser(request):
     _username = request.POST.get('email')
     obj = Customuser.objects.get(email=_username)
-    return JsonResponse({"status":obj.password}, status=200, safe = False)
+    return JsonResponse({"isRestaurant":obj.isRestaurant,"username": obj.email}, status=200, safe = False)
 
 def resetpass(request):
     # reset user password
@@ -38,7 +39,7 @@ def resetpass(request):
     obj = Customuser.objects.get(email=_email)
     obj.password = hashlib.sha256(_password.encode()).hexdigest()
     obj.save()
-    return JsonResponse({"status":"success"}, status=200, safe = False)
+    return JsonResponse({"success":True}, status=200, safe = False)
 
 
 def delete(request):
@@ -55,9 +56,9 @@ def authenticate(request):
     checkpassword = hashlib.sha256(_password.encode()).hexdigest()
     obj = Customuser.objects.get(email=_username)
     if obj.password == checkpassword:
-        return JsonResponse({"status":"valid"}, status=200, safe = False)
+        return JsonResponse({"success":True, "isRestaurant":obj.isRestaurant}, status=200, safe = False)
     else:
-        return JsonResponse({"status":"invalid"}, status=400, safe = False)
+        return JsonResponse({"success":False}, status=400, safe = False)
 
 def email(toemail, typeof):
     try:
