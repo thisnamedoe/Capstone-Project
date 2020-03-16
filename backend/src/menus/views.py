@@ -9,12 +9,12 @@ def create(request):
 
     M = Menu(restaurant_name=_restaurant_name)
     M.save()
-    return JsonResponse({"status":"restaurant created"}, status=201)
+    return JsonResponse({"success":True}, status=201)
 
 def get(request):
     _restaurant_name = request.POST.get('restaurant_name')
     obj = Menu.objects.get(restaurant_name=_restaurant_name)
-    return JsonResponse({"menu":obj.restaurant_name, "items":[2,3,4]}, status=201, safe=False)
+    return JsonResponse({"menu":obj.restaurant_name, "items":obj.food_items}, status=201, safe=False)
 
 def getmenuitem(request):
     name = request.POST.get('name')

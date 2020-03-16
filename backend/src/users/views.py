@@ -6,6 +6,8 @@ from django.core.mail import send_mail
 from users.models import Customuser
 from django.utils.crypto import get_random_string
 import hashlib
+import os
+
 
 def create(request):
     _password = request.POST.get('password')
@@ -55,8 +57,9 @@ def authenticate(request):
     _password = request.POST.get('password')
     checkpassword = hashlib.sha256(_password.encode()).hexdigest()
     obj = Customuser.objects.get(email=_username)
+
     if obj.password == checkpassword:
-        return JsonResponse({"success":True, "isRestaurant":obj.isRestaurant}, status=200, safe = False)
+        return JsonResponse({"success":True, "isRestaurant":obj.isRestaurant, "token":hashlib.md5(os.urandom(15)).hexdigest()}, status=200, safe = False)
     else:
         return JsonResponse({"success":False}, status=400, safe = False)
 
