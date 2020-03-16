@@ -31,7 +31,7 @@ class Customuser(models.Model):
 #        return self.email
     REQUIRED_FIELDS = ('email','password','salt')
     id = models.AutoField(primary_key=True)
-    email = models.CharField(max_length=255, null=False)
+    email = models.CharField(max_length=255,unique=True, null=False)
     password = models.CharField(max_length=255, null=True)
     salt = models.CharField(max_length=255, null=True)
     isRestaurant = models.BooleanField(default = False)
