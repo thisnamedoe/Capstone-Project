@@ -16,7 +16,6 @@ function* loginTask(action) {
       type: 'AUTH_LOGIN_SUCCESS',
       payload: {
         "success": true,
-        "token": "xxxxxxxxxxxxxxxxxxxxxx",
         "isRestaurant": true,
       }
     })
