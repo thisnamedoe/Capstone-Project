@@ -1,22 +1,34 @@
 from django.shortcuts import render
-from order.models import order
+from order.models import Order
+from menus.models import *
+from users.models import Customuser
 from django.http import JsonResponse
+import json
 # Create your views here.
 
 def create(request):
-    _restaurant_name = request.body('restaurant_name')
-    items = request.body.""
-    M = Menu(restaurant_name=_restaurant_name)
-    M.save()
-    return JsonResponse({"status":"restaurant created"}, status=201)
+    reqbody = json.loads(request.body)
+    restaurant_id = reqbody['restaurant_id']
+    menu = Menu.objects.get(id = restaurant_id)
+    ordered_by = reqbody['ordered_by']
+    customer = Customuser.objects.get(email = ordered_by)
+    items = reqbody['items']
+    items = MenuItem.objects.filter(id__in=(items))
+    table_id = reqbody['table_id']
+    tables = Table.objects.get(id = table_id)
+    obj = Order(restaurant = menu, tables = tables, pending = True, created_by = customer)
+    obj.save()
+    obj.food_items.set(items)
+    #return JsonResponse({"order":list(obj.values())}, status=200)
+    return JsonResponse({"restaurant":obj.restaurant.restaurant_name,"success": True}, status=200)
 
 def get(request):
     _restaurant_name = request.POST.get('restaurant_name')
-    obj = Menu.objects.get(restaurant_name=_restaurant_name)
-    return JsonResponse({"menu":obj.restaurant_name, "items":[2,3,4]}, status=201, safe=False)
+    orders = Order.objects.filter(restaurant_name=_restaurant_name)
+    return JsonResponse({"orders": list(orders.values())}, status=200)
 
 def delete(request):
-    getid = request.POST.get('id')
-    obj = Menu.objects.get(name=getname)
+    getid = request.POST.get('order_id')
+    obj = Order.objects.get(name=getname)
     name = obj.delete()
     return JsonResponse({"deleted":name}, status=200, safe = False)
