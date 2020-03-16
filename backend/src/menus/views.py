@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from menus.models import Menu, MenuItem
+from menus.models import Menu, MenuItem, Table 
 from django.http import JsonResponse
+from django.core import serializers
 
 # Create your views here.
 def create(request):
@@ -40,3 +41,22 @@ def removemenuitem(request):
     obj = MenuItem.objects.get(name=getname)
     name = obj.delete()
     return JsonResponse({"deleted":getname}, status=200, safe = False)
+
+def addtable(request):
+    restname = request.POST.get('restaurant_name')
+    menu = Menu.objects.get(restaurant_name=restname)
+    tablenum = menu.tables.all().count()
+    table = Table(name = restname+'_'+str(tablenum))
+    table.save()
+    menu.tables.add(table)
+    data = menu.tables.all()
+    a = list(data)
+    return JsonResponse(a,safe=False)
+    
+def gettables(request):
+    restname = request.POST.get('restaurant_name')
+    menu = Menu.objects.get(restaurant_name=restname)
+    data = menu.tables.all()
+    for item in data:
+        item['product'] = model_to_dict(item['product'])
+    data = serializers.serialize('json', menu.tables.all())

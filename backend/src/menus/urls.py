@@ -9,4 +9,5 @@ urlpatterns = [
         path('addmenuitem/', views.addmenuitem),
         path('removemenuitem/', views.removemenuitem),
         path('delete/', views.delete),
+        path('addtable/', views.addtable),
         ]
