@@ -22,7 +22,7 @@ class SignupComponent extends Component {
     } = this.props;
 
     if (registerMessage && registerMessage.success) {
-      Actions.replace('loginScreen', {
+      Actions.loginScreen({
         loginError: {
           message: 'Sign Up successful',
         },
@@ -72,7 +72,7 @@ class SignupComponent extends Component {
           loading={loading}
           onPress={onSignupSubmit}
         />
-      </AppBase>
+      </AppBase >
     );
   }
 }

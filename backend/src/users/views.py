@@ -7,26 +7,31 @@ from users.models import Customuser
 from django.utils.crypto import get_random_string
 import hashlib
 import os
+import json
 
 
 def create(request):
-    _password = request.POST.get('password')
-    _email = request.POST.get('email')
-    _isRestaurant = request.POST.get('isRestaurant')
-    #_restaurant = request.POST.get('restaurant')
-    # other stuff too
-    # create using function or modelname.objects.create(param1=x, param2 = y.....etc)
-    #if _restaurant == 'yes':
-    #    newuser = CustomUserManager().create_restaurant_user(_email, _password)
-    #else:
-    #    newuser = CustomUserManager().create_user(_email, _password)
-        #return HttpResponse(newuser.get('is_restaurant'))
-    #email('user_email', 0)
-    _salt = get_random_string(length=32)
-    password = hashlib.sha256(_password.encode()).hexdigest()
-    user = Customuser(email=_email, password=password, isRestaurant= _isRestaurant)
-    user.save()
-    return JsonResponse({"success":True}, status=200)
+    try:
+        body = json.loads(request.body)
+        _email = body.get('email')
+        _password = body.get('password')
+        _isRestaurant = body.get('isRestaurant') or False
+        #_restaurant = request.POST.get('restaurant')
+        # other stuff too
+        # create using function or modelname.objects.create(param1=x, param2 = y.....etc)
+        #if _restaurant == 'yes':
+        #    newuser = CustomUserManager().create_restaurant_user(_email, _password)
+        #else:
+        #    newuser = CustomUserManager().create_user(_email, _password)
+            #return HttpResponse(newuser.get('is_restaurant'))
+        #email('user_email', 0)
+        _salt = get_random_string(length=32)
+        password = hashlib.sha256(_password.encode()).hexdigest()
+        user = Customuser(email=_email, password=password, isRestaurant= _isRestaurant)
+        user.save()
+        return JsonResponse({"success":True}, status=200)
+    except ValueError:
+        return JsonResponse({"success":False, "message": "Email must be valid or email is already in use"}, status=400)
 
 def getuser(request):
     _username = request.POST.get('email')
@@ -54,9 +59,9 @@ def delete(request):
 
 def authenticate(request):
     try:
-        print('here')
-        _username = request.POST.get('email')
-        _password = request.POST.get('password')
+        body = json.loads(request.body)
+        _username = body.get('email')
+        _password = body.get('password')
         checkpassword = hashlib.sha256(_password.encode()).hexdigest()
         obj = Customuser.objects.get(email=_username)
 
@@ -64,7 +69,7 @@ def authenticate(request):
             return JsonResponse({"success":True, "isRestaurant":obj.isRestaurant, "token":hashlib.md5(os.urandom(15)).hexdigest()}, status=200, safe = False)
         else:
             return JsonResponse({"success":False, "message": "Invalid username or password"}, status=400, safe = False)
-    except:
+    except ValueError:
         return JsonResponse({"success":False, "message": "Invalid username or password"}, status=400, safe = False)
 
 def email(toemail, typeof):

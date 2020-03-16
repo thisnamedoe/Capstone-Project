@@ -6,7 +6,7 @@ function doLogin(email, password) {
     email: email,
     password: password
   };
-  return request({ url: LOGIN_URL, method: 'POST', data: data });
+  return request({ url: LOGIN_URL, method: 'POST', data });
 }
 
 function doRegister(email, password) {
@@ -14,7 +14,7 @@ function doRegister(email, password) {
     email: email,
     password: password
   };
-  return request({ url: REGISTER_URL, method: 'POST', data: data });
+  return request({ url: REGISTER_URL, method: 'POST', data });
 }
 
 export default {

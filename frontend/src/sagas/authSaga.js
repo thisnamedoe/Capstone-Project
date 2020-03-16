@@ -39,9 +39,9 @@ function* registerTask(action) {
     yield put({
       type: 'AUTH_REGISTER_LOADING',
     });
-
+    
     const { payload } = action;
-
+    console.log('here', payload)
     const res = yield call(Auth.doRegister, payload.email, payload.password);
 
     if (res.status === 200) {

@@ -20,8 +20,8 @@ class SignupScreen extends Component {
 
   handleSignUpSubmit = () => {
     const { email, password } = this.state;
-    // this.props.authRegister(email, password);
-    Actions.loginScreen();
+    this.props.authRegister(email, password);
+    // Actions.loginScreen();
   };
 
   handleEmailChange = (email) => {

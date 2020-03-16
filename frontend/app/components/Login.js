@@ -18,7 +18,6 @@ class LoginComponent extends Component {
     const {
       loading, onLoginSubmit, onEmailChange, onPasswordChange, disableLogin, loginError
     } = this.props;
-    console.log(loginError);
     return (
       <AppBase
         style={{

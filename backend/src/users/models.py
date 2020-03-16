@@ -34,5 +34,5 @@ class Customuser(models.Model):
     email = models.CharField(max_length=255,unique=True, null=False)
     password = models.CharField(max_length=255, null=True)
     salt = models.CharField(max_length=255, null=True)
-    isRestaurant = models.BooleanField(default = False)
+    isRestaurant = models.BooleanField(null=False, default=False)
 

@@ -9,8 +9,8 @@ export const authLogin = (email, password) => ({
 export const authRegister = (email, password) => ({
   type: 'AUTH_REGISTER',
   payload: {
-    email,
-    password,
+    email: email,
+    password: password,
   },
 });
 export const authLogout = () => ({
