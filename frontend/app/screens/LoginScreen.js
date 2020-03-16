@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Actions } from 'react-native-router-flux';
 
-
 import { cleanCart } from '../../src/actions/cart';
 import { authLogin } from '../../src/actions/index'
 import LoginComponent from '../components/Login';
@@ -18,6 +17,7 @@ class LoginScreen extends Component {
     this.state = {
       email: null,
       password: null,
+      isRestaurant: null,
     };
   }
 
@@ -26,6 +26,7 @@ class LoginScreen extends Component {
     if (loginMessage !== null && loginMessage.token && loginMessage.token.length > 10) {
       Actions.reset('drawer');
     }
+
   }
 
   async componentWillReceiveProps(nextProps, nextContext) {
@@ -36,7 +37,6 @@ class LoginScreen extends Component {
   handleLoginSubmit = () => {
     const { email, password } = this.state;
     this.props.authLogin(email, password);
-
     this.props.cleanCart();
   };
 
@@ -54,10 +54,14 @@ class LoginScreen extends Component {
 
   handleRedirect = (loginMessage) => {
     if (loginMessage && loginMessage.token) {
-      try {
-        Actions.reset('drawer');
-      } catch (e) {
-        // console.log(e);
+      if (loginMessage.isRestaurant) {
+        Actions.reset('restaurantDrawer');
+      }
+      else {
+        try {
+          Actions.reset('drawer');
+        } catch (e) {
+        }
       }
     }
   };

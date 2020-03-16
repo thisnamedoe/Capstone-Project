@@ -4,7 +4,7 @@ import { LOGIN_URL, REGISTER_URL } from './api_constants';
 function doLogin(email, password) {
   const data = {
     email,
-    password,
+    password
   };
   return request({ url: LOGIN_URL, method: 'POST', data });
 
@@ -13,7 +13,7 @@ function doLogin(email, password) {
 function doRegister(email, password) {
   const data = {
     email,
-    password,
+    password
   };
   return request({ url: REGISTER_URL, method: 'POST', data });
 }

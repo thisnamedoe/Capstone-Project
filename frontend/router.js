@@ -3,11 +3,9 @@ import React from 'react';
 import { Drawer, Router, Scene } from 'react-native-router-flux';
 
 import LoginScreen from './app/screens/LoginScreen';
-import HomeScreen from './app/screens/HomeScreen';
 import Colors from './src/constants/colors';
 import SignupScreen from './app/screens/SignupScreen';
 import ItemInfoScreen from './app/screens/ItemInfoScreen';
-import CuisineRestaurantsScreen from './app/screens/CuisineRestaurantsScreen';
 import CartScreen from './app/screens/CartScreen';
 import PaymentHome from './app/screens/Payment/Home';
 import PaymentComplete from './app/screens/Payment/Complete';
@@ -15,7 +13,10 @@ import PaymentFailed from './app/screens/Payment/Failed';
 import SideDrawer from './app/screens/SideDrawer';
 import DrawerImage from './app/components/DrawerImage';
 import OrdersList from './app/screens/OrderListScreen';
-
+import RestaurantItems from './app/screens/RestaurantItems';
+import RestaurantSideDrawer from './app/screens/RestaurantSideDrawer';
+import ItemEdit from './app/screens/ItemScreen';
+import ItemAdd from './app/screens/ItemAdd';
 
 const AppRouter = () => (
     <Router>
@@ -32,6 +33,42 @@ const AppRouter = () => (
                 key="signupScreen"
                 component={SignupScreen}
             />
+
+            <Drawer
+                key="restaurantDrawer"
+                hideNavBar
+                contentComponent={RestaurantSideDrawer}
+                drawerIcon={<DrawerImage />}
+                panHandlers={null}
+                drawerWidth={300}
+            >
+                <Scene>
+                    <Scene
+                        key="restaurantItems"
+                        component={RestaurantItems}
+                        title="Restaurant App"
+                        titleStyle={{
+                            color: Colors.primaryColor,
+                        }}
+                    />
+                    <Scene
+                        key="showAllOrders"
+                        component={OrdersList}
+                        title="Restaurant App"
+                    />
+                    <Scene
+                        key="editItem"
+                        component={ItemEdit}
+                        title="Restaurant App"
+                    />
+                    <Scene
+                        key="addItem"
+                        component={ItemAdd}
+                        title="Restaurant App"
+                    />
+                </Scene>
+            </Drawer>
+
             <Drawer
                 key="drawer"
                 hideNavBar
@@ -41,23 +78,6 @@ const AppRouter = () => (
                 drawerWidth={300}
             >
                 <Scene>
-                    {/* <Scene
-                        key="homeScreen"
-                        component={HomeScreen}
-                        title="Restaurant App"
-                        titleStyle={{
-                            color: Colors.primaryColor,
-                        }}
-                    /> */}
-
-                    {/* <Scene
-                        key="cuisineRestaurants"
-                        component={CuisineRestaurantsScreen}
-                        titleStyle={{
-                            color: Colors.primaryColor,
-                        }}
-                    /> */}
-
                     <Scene
                         key="itemScreen"
                         component={ItemInfoScreen}
@@ -66,7 +86,6 @@ const AppRouter = () => (
                             color: Colors.primaryColor,
                         }}
                     />
-
                     <Scene
                         key="cartScreen"
                         component={CartScreen}
