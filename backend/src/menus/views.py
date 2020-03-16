@@ -1,20 +1,22 @@
 from django.shortcuts import render
 from menus.models import Menu, MenuItem, Table 
+from users.models import Customuser
 from django.http import JsonResponse
 from django.core import serializers
+import json
 
 # Create your views here.
 def create(request):
     _restaurant_name = request.POST.get('restaurant_name')
-
     M = Menu(restaurant_name=_restaurant_name)
     M.save()
     return JsonResponse({"success":True, "id":M.id}, status=200)
 
 def get(request):#######list(SomeModel.objects.values())
-    _id = request.POST.get('restaurant_id')
-    obj = Menu.objects.get(id=_id)
-    return JsonResponse({"id":obj.id,"name": obj.restaurant_name, "menu":obj.restaurant_name, "items":list(obj.food_items.values()), "tables":list(obj.tables.values())}, status=200)
+    body = json.loads(request.body)
+    email = body.get('email')
+    obj = Menu.objects.get(restaurant_name=email)
+    return JsonResponse({"id":obj.id}, status=200)
 
 def getmenuitem(request):
     _id = request.POST.get('id')

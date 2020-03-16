@@ -8,6 +8,7 @@ from django.utils.crypto import get_random_string
 import hashlib
 import os
 import json
+from menus.models import Menu, MenuItem, Table 
 
 
 def create(request):
@@ -16,6 +17,10 @@ def create(request):
         _email = body.get('email')
         _password = body.get('password')
         _isRestaurant = body.get('isRestaurant') or False
+        
+        if _isRestaurant:
+            M = Menu(restaurant_name=_email)
+            M.save()
         #_restaurant = request.POST.get('restaurant')
         # other stuff too
         # create using function or modelname.objects.create(param1=x, param2 = y.....etc)
