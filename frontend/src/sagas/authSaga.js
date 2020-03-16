@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import storage from 'redux-persist/lib/storage';
-
+import { API_BASE, LOGIN_URL, REGISTER_URL } from '../service/api_constants';
 
 import Auth from '../service/login';
 
@@ -11,27 +11,19 @@ function* loginTask(action) {
     });
     const { payload } = action;
 
-    // const res = yield call(Auth.doLogin, payload.email, payload.password);
-    yield put({
-      type: 'AUTH_LOGIN_SUCCESS',
-      payload: {
-        "success": true,
-        "token": "xxxxxxxxxxxxxxxxxxxxxx",
-        "isRestaurant": true,
-      }
-    })
+    const res = yield call(Auth.doLogin, payload.email, payload.password);
 
-    // if (res.status === 200) {
-    //   yield put({
-    //     type: 'AUTH_LOGIN_SUCCESS',
-    //     payload: res.data,
-    //   });
-    // } else {
-    //   yield put({
-    //     type: 'AUTH_LOGIN_ERROR',
-    //     payload: res.data,
-    //   });
-    // }
+    if (res.status === 200) {
+      yield put({
+        type: 'AUTH_LOGIN_SUCCESS',
+        payload: res.data,
+      });
+    } else {
+      yield put({
+        type: 'AUTH_LOGIN_ERROR',
+        payload: res.data,
+      });
+    }
   } catch (e) {
     // console.log(e);
     const payload = typeof e === 'string' ? { message: e } : e.data;

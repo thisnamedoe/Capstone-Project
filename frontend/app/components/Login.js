@@ -16,9 +16,9 @@ import Colors from '../../src/constants/colors';
 class LoginComponent extends Component {
   render() {
     const {
-      loading, onLoginSubmit, onEmailChange, onPasswordChange, disableLogin,
+      loading, onLoginSubmit, onEmailChange, onPasswordChange, disableLogin, loginError
     } = this.props;
-
+    console.log(loginError);
     return (
       <AppBase
         style={{
@@ -27,7 +27,7 @@ class LoginComponent extends Component {
       >
         <PrimaryText bold size={26}>Capstone</PrimaryText>
         <BR size={50} />
-        {/* {loginError && <PrimaryText>{loginError.message}</PrimaryText>} */}
+        {loginError && <PrimaryText>{loginError.message}</PrimaryText>}
         <BR size={50} />
 
         <TextInput

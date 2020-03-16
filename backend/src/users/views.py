@@ -53,15 +53,19 @@ def delete(request):
     return JsonResponse({"deleted":_username}, status=200, safe = False)
 
 def authenticate(request):
-    _username = request.POST.get('email')
-    _password = request.POST.get('password')
-    checkpassword = hashlib.sha256(_password.encode()).hexdigest()
-    obj = Customuser.objects.get(email=_username)
+    try:
+        print('here')
+        _username = request.POST.get('email')
+        _password = request.POST.get('password')
+        checkpassword = hashlib.sha256(_password.encode()).hexdigest()
+        obj = Customuser.objects.get(email=_username)
 
-    if obj.password == checkpassword:
-        return JsonResponse({"success":True, "isRestaurant":obj.isRestaurant, "token":hashlib.md5(os.urandom(15)).hexdigest()}, status=200, safe = False)
-    else:
-        return JsonResponse({"success":False}, status=400, safe = False)
+        if obj.password == checkpassword:
+            return JsonResponse({"success":True, "isRestaurant":obj.isRestaurant, "token":hashlib.md5(os.urandom(15)).hexdigest()}, status=200, safe = False)
+        else:
+            return JsonResponse({"success":False, "message": "Invalid username or password"}, status=400, safe = False)
+    except:
+        return JsonResponse({"success":False, "message": "Invalid username or password"}, status=400, safe = False)
 
 def email(toemail, typeof):
     try:
