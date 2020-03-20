@@ -34,25 +34,25 @@ const cuisines = [
     },
     {
         id: '3',
-        name: 'ALLLLLLLLAH',
+        name: 'desserts',
         image: 'desserts',
         price: '3.99',
     },
     {
         id: '4',
-        name: 'ALLLLLLLLAH',
+        name: 'beverages',
         image: 'beverages',
         price: '5.99',
     },
     {
         id: '5',
-        name: 'ALLLLLLLLAH',
+        name: 'ice-creams',
         image: 'ice-creams',
         price: '4.99',
     },
     {
         id: '6',
-        name: 'ALLLLLLLLAH',
+        name: 'taco',
         image: 'taco',
         price: '3.99',
     },
@@ -98,8 +98,7 @@ class ItemInfoScreen extends Component {
         headerRight: <SignOutButton />,
     });
 
-    deleteItem = () => {
-        console.log('delete');
+    deleteItem = (item) => {
     }
 
     componentDidMount() {

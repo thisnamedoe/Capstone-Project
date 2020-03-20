@@ -16,7 +16,7 @@ def get(request):#######list(SomeModel.objects.values())
     body = json.loads(request.body)
     email = body.get('email')
     obj = Menu.objects.get(restaurant_name=email)
-    return JsonResponse({"id":obj.id}, status=200)
+    return JsonResponse({"id":obj.id, "items":list(obj.food_items.values())}, status=200)
 
 def getmenuitem(request):
     _id = request.POST.get('id')

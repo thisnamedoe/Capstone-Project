@@ -5,6 +5,19 @@ import { View, StyleSheet, FlatList, Text } from 'react-native';
 import { fetchOrders } from '../../src/actions';
 import colors from '../../src/constants/colors';
 
+const orders = [
+  {
+    '_id': 1,
+    'totalCost': 50,
+    'items': [
+      {
+        'id': 2,
+        'price': 5,
+      }
+    ]
+  }
+]
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -49,7 +62,7 @@ class OrdersList extends React.Component {
       </View>
       <View style={styles.divider}>
         <Text style={styles.heading}>Total Price:</Text>
-        <Text>{`Rs. ${item.totalCost}`}</Text>
+        <Text>{`$ ${item.totalCost}`}</Text>
       </View>
       <View style={styles.divider}>
         <Text style={styles.item}>Items ordered</Text>
@@ -58,13 +71,10 @@ class OrdersList extends React.Component {
     </View>
   )
   render() {
-    if (this.props.ordersList === null) {
-      return (<Text>Nothing found</Text>);
-    }
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.props.ordersList.orders}
+          data={orders}
           renderItem={this.renderItem}
         />
 
@@ -73,11 +83,11 @@ class OrdersList extends React.Component {
   }
 }
 
-OrdersList.propTypes = {
-  ordersList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  fetchOrders: PropTypes.func.isRequired,
-};
+// OrdersList.propTypes = {
+//   ordersList: PropTypes.arrayOf(PropTypes.object).isRequired,
+//   fetchOrders: PropTypes.func.isRequired,
+// };
 
-const mapStateToProps = ({ orders }) => ({ ordersList: orders.ordersList });
+// const mapStateToProps = ({ orders }) => ({ ordersList: orders.ordersList });
 
-export default connect(mapStateToProps, { fetchOrders })(OrdersList);
+export default OrdersList;
