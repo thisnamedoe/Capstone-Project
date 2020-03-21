@@ -59,7 +59,7 @@ def editmenuitem(request):
     MI.name = body.get('name')
     MI.price = body.get('price')
     MI.image = body.get('image')
-    return JsonResponse({"id": MI.id,"item":MI.name, "restaurant_email": restaurant_email}, status=200)
+    return JsonResponse({"id": MI.id,"item":MI.name, "restaurant_email": MI.restaurant_email}, status=200)
 
 def addtable(request):
     _id = request.POST.get('restaurant_id')
