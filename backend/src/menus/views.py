@@ -68,3 +68,9 @@ def deletetable(request):
     menu.tables.remove(table)
     name = table.delete()
     return JsonResponse({"deleted":name}, status=200)
+
+def getrestaurantfromtable(request):
+    _tablestring = request.POST.get('tablestring')
+    _restaurant_name = _tablestring.split("_")[0]
+    obj = Menu.objects.get(restaurant_name=_restaurant_name)
+    return JsonResponse({"id":obj.id, "items":list(obj.food_items.values())}, status=200)
