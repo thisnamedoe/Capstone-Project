@@ -25,7 +25,6 @@ function* loginTask(action) {
       });
     }
   } catch (e) {
-    // console.log(e);
     const payload = typeof e === 'string' ? { message: e } : e.data;
     yield put({
       type: 'AUTH_LOGIN_ERROR',
@@ -41,7 +40,6 @@ function* registerTask(action) {
     });
     
     const { payload } = action;
-    console.log('here', payload)
     const res = yield call(Auth.doRegister, payload.email, payload.password);
 
     if (res.status === 200) {
@@ -79,6 +77,7 @@ function* logoutTask() {
 }
 
 function* authSaga() {
+
   yield takeLatest('AUTH_LOGIN', loginTask);
   yield takeLatest('AUTH_REGISTER', registerTask);
   yield takeLatest('AUTH_LOGOUT', logoutTask);

@@ -42,9 +42,10 @@ def addmenuitem(request):
     return JsonResponse({"id": MI.id,"item":MI.name, "restaurant_email": restaurant_email}, status=200)
 
 def removemenuitem(request):
-    restaurant_id = request.POST.get('restaurant_id')
-    menu = Menu.objects.get(id = restaurant_id)
-    _id = request.POST.get('item_id')
+    body = json.loads(request.body)
+    restaurant_email = body.get('email')
+    menu = Menu.objects.get(restaurant_name = restaurant_email)
+    _id = body.get('item_id')
     obj = MenuItem.objects.get(id=_id)
     menu.food_items.remove(obj)
     name = obj.delete()

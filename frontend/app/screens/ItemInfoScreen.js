@@ -84,9 +84,9 @@ class ItemInfoScreen extends Component {
     this.props.getRestaurantItems(email);
   }
 
-  renderFoodList = () => {
+  renderFoodList = (items) => {
     return (<FlatList
-      data={cuisines}
+      data={items.items}
       bounces={false}
       ListHeaderComponent={this.renderHeader}
       keyExtractor={item => item.id}
@@ -128,7 +128,8 @@ class ItemInfoScreen extends Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { restaurantItems, restaurantLoading, restaurantError } = this.props;
+
     return (
       <AppBase
         style={{
@@ -154,7 +155,7 @@ class ItemInfoScreen extends Component {
             <PrimaryText align="left" size={24}>{restaurantName}</PrimaryText>
             <BR size={5} />
           </View>
-          {this.renderFoodList(data)}
+          {this.renderFoodList(restaurantItems)}
         </ScrollView>
       </AppBase>
     );

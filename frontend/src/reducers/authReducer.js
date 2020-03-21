@@ -1,5 +1,4 @@
 const initialState = {
-  loginError: null,
   loginLoading: false,
   loginMessage: null,
   registerLoading: false,

@@ -17,10 +17,10 @@ export const authLogout = () => ({
   type: 'AUTH_LOGOUT',
 });
 
-export const getRestaurantItems = (id) => ({
+export const getRestaurantItems = (email) => ({
   type: 'GET_RESTAURANT_ITEMS',
   payload: {
-    id,
+    email,
   }
 })
 

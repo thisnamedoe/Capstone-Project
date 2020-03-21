@@ -15,12 +15,12 @@ const client = axios.create({
 const request = (options) => {
 
   const onSuccess = (response) => {
-    console.debug('Request Successful!', response);
+    // console.debug('Request Successful!', response);
     return response;
   };
 
   const onError = (error) => {
-    console.log('Request Failed:', error);
+    // console.log('Request Failed:', error);
     // if (error.response) {
     //   console.log('Status:', error.response.status);
     //   console.log('Data:', error.response.data);

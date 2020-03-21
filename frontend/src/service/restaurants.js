@@ -9,7 +9,7 @@ function getRestaurantFoods(email = null) {
     };
   }
   return request({
-    url: RESTAURANT_FOODS_URL, method: 'POST', params
+    url: RESTAURANT_FOODS_URL, method: 'POST', data
   });
 }
 

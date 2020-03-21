@@ -24,7 +24,7 @@ class LoginComponent extends Component {
           justifyContent: 'center',
         }}
       >
-        <PrimaryText bold size={26}>Capstone</PrimaryText>
+        <PrimaryText bold size={26}>KuaiOrder</PrimaryText>
         <BR size={50} />
         {loginError && <PrimaryText>{loginError.message}</PrimaryText>}
         <BR size={50} />
