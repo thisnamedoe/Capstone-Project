@@ -4,6 +4,7 @@ import { TouchableOpacity, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PrimaryText from '../base_components/PrimaryText';
 import AppBase from '../base_components/AppBase';
+import OrdersList from './OrderListScreen';
 
 class SideDrawer extends Component {
     render() {
@@ -14,7 +15,8 @@ class SideDrawer extends Component {
                 }}
             >
                 <TouchableOpacity onPress={Actions.showAllOrders}>
-                    <Text style={{ fontSize: 18 }}>Restaurant Orders</Text>
+                <Text style={{ fontSize: 18 }}>Orders</Text>
+                <OrdersList></OrdersList>
                 </TouchableOpacity>
             </AppBase>
         );

@@ -5,7 +5,6 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
 import authReducer from './authReducer';
 import restaurantReducer from './restaurantReducer';
-import foodsReducer from './foodsReducer';
 import cartReducer from './cart';
 import ordersReducer from './ordersReducer';
 
@@ -23,17 +22,10 @@ const cartPersistConfig = {
   stateReconciler: autoMergeLevel2,
 };
 
-const foodPersistConfig = {
-  key: 'food',
-  storage,
-  blacklist: ['cuisineTypesError'],
-  stateReconciler: autoMergeLevel2,
-};
-
 const restaPersistConfig = {
   key: 'restaurant',
   storage,
-  blacklist: ['cuisineRestaurantError', 'error', 'cuisineRestaurants', 'restaurantInfo'],
+  blacklist: [],
   stateReconciler: autoMergeLevel2,
 };
 
@@ -47,7 +39,6 @@ const orderPersistConfig = {
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   restaurant: persistReducer(restaPersistConfig, restaurantReducer),
-  food: persistReducer(foodPersistConfig, foodsReducer),
   cart: persistReducer(cartPersistConfig, cartReducer),
   orders: persistReducer(orderPersistConfig, ordersReducer),
 });

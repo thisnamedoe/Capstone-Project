@@ -13,9 +13,12 @@ import FoodItem from '../components/FoodItem';
 import ViewRow from '../base_components/ViewRow';
 import BR from '../base_components/BR';
 import { updateCartItems } from '../../src/actions/cart';
+import { getRestaurantItems } from '../../src/actions/index';
 import SignOutButton from '../components/RightHeaderButtons';
 
 const restaurantName = 'SE 4450 Restaurant'
+
+const email = 'admin1';
 
 const cuisines = [
   {
@@ -73,7 +76,12 @@ class ItemInfoScreen extends Component {
     headerRight: <SignOutButton />,
   });
 
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
+    this.props.getRestaurantItems(email);
   }
 
   renderFoodList = () => {
@@ -145,7 +153,6 @@ class ItemInfoScreen extends Component {
           >
             <PrimaryText align="left" size={24}>{restaurantName}</PrimaryText>
             <BR size={5} />
-            {/* <SecondaryText align="left" size={16}>{details}</SecondaryText> */}
           </View>
           {this.renderFoodList(data)}
         </ScrollView>
@@ -158,16 +165,19 @@ ItemInfoScreen.defaultProps = {};
 
 ItemInfoScreen.propTypes = {
   updateCartItems: PropTypes.func.isRequired,
+  getRestaurantItems: PropTypes.func.isRequired,
 };
 
 function initMapStateToProps(state) {
   return {
+    restaurantItems: state.restaurant.restaurantItems,
   };
 }
 
 function initMapDispatchToProps(dispatch) {
   return bindActionCreators({
     updateCartItems,
+    getRestaurantItems,
   }, dispatch);
 }
 

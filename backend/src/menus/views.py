@@ -30,16 +30,16 @@ def delete(request):
     return JsonResponse({"deleted":restaurant_name}, status=200)
 
 def addmenuitem(request):
-    restaurant_id = request.POST.get('restaurant_id')
-    name = request.POST.get('name')
-    description = request.POST.get('description')
-    price = request.POST.get('price')
-    image = request.POST.get('image')
-    MI = MenuItem(name=name,description=description,price=price,image=image)
+    body = json.loads(request.body)
+    restaurant_email = body.get('email')
+    name = body.get('name')
+    price = body.get('price')
+    image = body.get('image')
+    MI = MenuItem(name=name,price=price,image=image)
     MI.save()
-    menu = Menu.objects.get(id = restaurant_id)
+    menu = Menu.objects.get(restaurant_name = restaurant_email)
     menu.food_items.add(MI)
-    return JsonResponse({"id": MI.id,"item":MI.name, "restaurant_id": restaurant_id}, status=200)
+    return JsonResponse({"id": MI.id,"item":MI.name, "restaurant_email": restaurant_email}, status=200)
 
 def removemenuitem(request):
     restaurant_id = request.POST.get('restaurant_id')

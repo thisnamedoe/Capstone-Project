@@ -17,6 +17,7 @@ import RestaurantItems from './app/screens/RestaurantItems';
 import RestaurantSideDrawer from './app/screens/RestaurantSideDrawer';
 import ItemEdit from './app/screens/ItemScreen';
 import ItemAdd from './app/screens/ItemAdd';
+import QRCodeScreen from './app/screens/QRCodeScreen';
 
 const AppRouter = () => (
     <Router>
@@ -78,6 +79,11 @@ const AppRouter = () => (
                 drawerWidth={300}
             >
                 <Scene>
+                    {/* <Scene
+                        key="qrCode"
+                        component={QRCodeScreen}
+                        title="Scan Code"
+                    /> */}
                     <Scene
                         key="itemScreen"
                         component={ItemInfoScreen}
@@ -123,6 +129,7 @@ const AppRouter = () => (
                         component={OrdersList}
                         title="My Orders"
                     />
+
                 </Scene>
             </Drawer>
         </Scene>

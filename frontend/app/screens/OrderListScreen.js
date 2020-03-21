@@ -5,14 +5,18 @@ import { View, StyleSheet, FlatList, Text } from 'react-native';
 import { fetchOrders } from '../../src/actions';
 import colors from '../../src/constants/colors';
 
-const orders = [
+const myOrders = [
   {
-    '_id': 1,
-    'totalCost': 50,
-    'items': [
+    id: '5',
+    totalCost: '21',
+    items: [
       {
-        'id': 2,
-        'price': 5,
+        id: '1',
+        price: '21'
+      },
+      {
+        id: '2',
+        price: '22'
       }
     ]
   }
@@ -45,20 +49,20 @@ const styles = StyleSheet.create({
 });
 
 class OrdersList extends React.Component {
-  componentWillMount() {
-    this.props.fetchOrders();
-  }
-  mapItems = items => items.map(item => (
+  // componentWillMount() {
+  //   this.props.fetchOrders();
+  // }
+  mapItems = ({item}) => (
     <View>
-      <Text>{`ItemId: ${item.id}`}</Text>
-      <Text>{`Price: Rs. ${item.price}`}</Text>
+      <Text>{`Item Name: ${item.id}`}</Text>
+      <Text>{`Price: $${item.price}`}</Text>
     </View>
-  ))
-  renderItem = ({ item, index }) => (
+  )
+  renderItem = ({ item }) => (
     <View style={styles.card}>
       <View style={styles.divider}>
         <Text style={styles.heading}>Order Id</Text>
-        <Text>{item._id}</Text>
+        <Text>{item.id}</Text>
       </View>
       <View style={styles.divider}>
         <Text style={styles.heading}>Total Price:</Text>
@@ -66,7 +70,10 @@ class OrdersList extends React.Component {
       </View>
       <View style={styles.divider}>
         <Text style={styles.item}>Items ordered</Text>
-        {item.items.map(this.mapItems)}
+        <FlatList
+          data={item.items}
+          renderItem={this.mapItems}
+        />
       </View>
     </View>
   )
@@ -74,7 +81,7 @@ class OrdersList extends React.Component {
     return (
       <View style={styles.container}>
         <FlatList
-          data={orders}
+          data={myOrders}
           renderItem={this.renderItem}
         />
 

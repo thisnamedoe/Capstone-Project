@@ -47,21 +47,6 @@ const SectionItem = styled.View`
 `;
 
 class PaymentHome extends Component {
-  // static navigationOptions = {
-  //   title: (<PrimaryText style={{ flex: 1 }}> Make Payment</PrimaryText>),
-  //   headerStyle: {
-  //     backgroundColor: '#f5f5f5',
-  //     borderBottomWidth: 1,
-  //     borderStyle: 'solid',
-  //     borderColor: '#fcfcfc',
-  //   },
-  //   headerTintColor: '#000',
-  //   headerTitleStyle: {
-  //     fontWeight: 'bold',
-  //   },
-  //   headerBackTitle: 'Home',
-  //   headerLeft: null,
-  // };
 
   constructor(props) {
     super(props);
@@ -81,10 +66,9 @@ class PaymentHome extends Component {
 
 
   _onChange = (form) => {
-    this.setState((s, p) => ({
-      cardData: form,
-      validData: form.valid,
-    }));
+    console.log(form);
+    this.setState(cardData, form);
+    this.setState(validData,form.valid);
   };
 
   doPayment = async () => {
@@ -93,32 +77,10 @@ class PaymentHome extends Component {
     });
 
     const { totalAmount } = this.props;
-    const { cardData: { values: cardValue } } = this.state;
 
-    const apiKey = 'pk_test_rM2enW1rNROwx4ukBXGaIzhr';
-    const client = new Stripe(apiKey);
-    const expMonth = cardValue.expiry.split('/')[0];
-    const expYear = cardValue.expiry.split('/')[1];
-    // Create a Stripe token with new card infos
-    const token = await client.createToken({
-      number: cardValue.number.replace(' ', ''),
-      exp_month: expMonth,
-      exp_year: expYear,
-      cvc: cardValue.cvc,
-      address_zip: cardValue.postalCode,
+    Actions.paymentSuccess({
+      totalAmount,
     });
-
-    // console.log(token);
-
-    if (token) {
-      Actions.paymentSuccess({
-        totalAmount,
-      });
-    } else {
-      Actions.paymentFailed({
-        totalAmount,
-      });
-    }
   };
 
   handleCancelOrder = () => {
@@ -127,7 +89,6 @@ class PaymentHome extends Component {
 
   render() {
     const { totalAmount } = this.props;
-    console.log('here', totalAmount);
     return (
       <AppBase>
 

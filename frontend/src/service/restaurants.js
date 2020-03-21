@@ -1,25 +1,19 @@
 import request from './request';
-import { RESTAURANT_FILTER_URL, RESTAURANT_URL } from './api_constants';
+import { RESTAURANT_FOODS_URL } from './api_constants';
 
-function getRestaurant(id = null, headers = null) {
-  let params = {};
-  if (id != null) {
-    params = {
-      id,
+function getRestaurantFoods(email = null) {
+  let data = {};
+  if (email != null) {
+    data = {
+      email,
     };
   }
   return request({
-    url: RESTAURANT_URL, method: 'GET', params, headers,
+    url: RESTAURANT_FOODS_URL, method: 'POST', params
   });
 }
 
-function getRestaurantByType(type, headers = null) {
-  return request({
-    url: `${RESTAURANT_FILTER_URL}?type=${type}`, method: 'GET', headers,
-  });
-}
 
 export default {
-  getRestaurant,
-  getRestaurantByType,
+  getRestaurantFoods
 };

@@ -17,24 +17,31 @@ export const authLogout = () => ({
   type: 'AUTH_LOGOUT',
 });
 
-export const fetchCuisineTypes = () => ({
-  type: 'FETCH_CUISINE_TYPES',
-});
-
-export const fetchRestaurant = (id = null) => ({
-  type: 'FETCH_RESTAURANT',
+export const getRestaurantItems = (id) => ({
+  type: 'GET_RESTAURANT_ITEMS',
   payload: {
     id,
-  },
-});
+  }
+})
 
-export const fetchRestaurantByType = (type = null, isFromCuisine = false) => ({
-  type: 'FETCH_RESTAURANT_TYPE',
-  payload: {
-    type,
-    isFromCuisine,
-  },
-});
+// export const fetchCuisineTypes = () => ({
+//   type: 'FETCH_CUISINE_TYPES',
+// });
+
+// export const fetchRestaurant = (id = null) => ({
+//   type: 'FETCH_RESTAURANT',
+//   payload: {
+//     id,
+//   },
+// });
+
+// export const fetchRestaurantByType = (type = null, isFromCuisine = false) => ({
+//   type: 'FETCH_RESTAURANT_TYPE',
+//   payload: {
+//     type,
+//     isFromCuisine,
+//   },
+// });
 
 export const fetchOrders = () => ({
   type: 'FETCH_ORDERS',

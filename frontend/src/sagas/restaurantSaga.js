@@ -1,18 +1,12 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import API from '../service/restaurants';
 
-const authTokenSelector = state => state.auth.loginMessage.token;
-
 function* restaurantTask(action) {
   try {
     const { payload } = action;
 
-    const authToken = yield select(authTokenSelector);
-
-    const res = yield call(API.getRestaurant, payload.id, {
-      Authorization: `Bearer ${authToken}`,
-    });
-
+    const res = yield call(API.getRestaurantFoods, payload.id);
+    console.log('res', res);
 
     if (res.status === 200) {
       if (payload.id === null) {
@@ -42,7 +36,7 @@ function* restaurantTask(action) {
 }
 
 function* restaurantSaga() {
-  yield takeLatest('FETCH_RESTAURANT', restaurantTask);
+  yield takeLatest('GET_RESTAURANT_ITEMS', restaurantTask);
 }
 
 export default restaurantSaga;
