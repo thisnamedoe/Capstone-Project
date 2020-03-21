@@ -11,5 +11,6 @@ urlpatterns = [
         path('delete/', views.delete),
         path('addtable/', views.addtable),
         path('removetable/',views.deletetable),
-        path('menufromtablestring/', views.getrestaurantfromtable)
+        path('menufromtablestring/', views.getrestaurantfromtable),
+        path('editmenuitem/', views.editmenuitem)
         ]
