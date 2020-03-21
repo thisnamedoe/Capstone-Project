@@ -51,6 +51,16 @@ def removemenuitem(request):
     name = obj.delete()
     return JsonResponse({"deleted":name}, status=200)
 
+def editmenuitem(request):
+    body = json.loads(request.body)
+    _id = body.get('item_id')
+    MI = MenuItem.objects.get(id=_id)
+    MI.restaurant_email = body.get('email')
+    MI.name = body.get('name')
+    MI.price = body.get('price')
+    MI.image = body.get('image')
+    return JsonResponse({"id": MI.id,"item":MI.name, "restaurant_email": restaurant_email}, status=200)
+
 def addtable(request):
     _id = request.POST.get('restaurant_id')
     menu = Menu.objects.get(id=_id)
