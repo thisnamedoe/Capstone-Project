@@ -13,11 +13,13 @@ import FoodItem from '../components/RestaurantFoodItem';
 import ViewRow from '../base_components/ViewRow';
 import BR from '../base_components/BR';
 import SignOutButton from '../components/OnlyLogout';
+import { getRestaurantItems, deleteRestaurantItems } from '../../src/actions/index';
 import TextButton from '../base_components/TextButton';
 import { Actions } from 'react-native-router-flux';
 import styled from 'styled-components';
 
 const restaurantName = 'SE 4450 Restaurant'
+const email = 'admin1';
 
 const cuisines = [
     {
@@ -94,19 +96,31 @@ const PriceText = styled.Text`
 `;
 
 class ItemInfoScreen extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            delete_item: null
+        }
+    }
+
     static navigationOptions = ({ navigation }) => ({
         headerRight: <SignOutButton />,
     });
 
-    deleteItem = (item) => {
-    }
+    // async componentWillReceiveProps(nextProps, nextContext) {
+    //     console.log('here');
+    //     await this.props.getRestaurantItems(email);
+    //     // this.forceUpdate();
+    // }
 
     componentDidMount() {
+        this.props.getRestaurantItems(email);
     }
 
-    renderFoodList = () => {
+    renderFoodList = (items) => {
         return (<FlatList
-            data={cuisines}
+            data={items.items}
             bounces={false}
             ListHeaderComponent={this.renderHeader}
             keyExtractor={item => item.id}
@@ -142,7 +156,11 @@ class ItemInfoScreen extends Component {
                 <FoodItem
                     food={item}
                     editItem={() => Actions.editItem({ food: item })}
-                    deleteItem={this.deleteItem}
+                    deleteItem={() => {
+                        this.props.deleteRestaurantItems(email, item.id);
+                        this.props.getRestaurantItems(email);
+                        this.forceUpdate();
+                    }}
                 />
             );
         }
@@ -150,7 +168,7 @@ class ItemInfoScreen extends Component {
     };
 
     render() {
-        const { data } = this.props;
+        const { restaurantItems, restaurantLoading, restaurantError } = this.props;
         return (
 
             <AppBase
@@ -179,7 +197,7 @@ class ItemInfoScreen extends Component {
                             />
                         </RightSection>
                     </Container>
-                    {this.renderFoodList(data)}
+                    {this.renderFoodList(restaurantItems)}
                 </ScrollView>
 
             </AppBase>
@@ -190,15 +208,23 @@ class ItemInfoScreen extends Component {
 ItemInfoScreen.defaultProps = {};
 
 ItemInfoScreen.propTypes = {
+    getRestaurantItems: PropTypes.func.isRequired,
+    deleteRestaurantItems: PropTypes.func.isRequired,
 };
 
 function initMapStateToProps(state) {
     return {
+        restaurantItems: state.restaurant.restaurantItems,
+        deleteItem: state.restaurant.deleteItem,
+        deleteItemLoading: state.restaurant.deleteItemLoading,
+        deleteItemError: state.restaurant.deleteItemError,
     };
 }
 
 function initMapDispatchToProps(dispatch) {
     return bindActionCreators({
+        getRestaurantItems,
+        deleteRestaurantItems,
     }, dispatch);
 }
 

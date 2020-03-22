@@ -4,7 +4,7 @@ from django.db import models
 class MenuItem(models.Model):
 	id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=255, null=False, unique=True)
-	price = models.IntegerField(null=False)
+	price = models.FloatField(null=False)
 	image = models.CharField(max_length=255, null=True)
 
 class Table(models.Model):

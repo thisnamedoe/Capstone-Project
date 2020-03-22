@@ -12,5 +12,6 @@ export default {
     'salad': require('../../assets/images/salad.png'),
     paymentComplete: require('../../assets/images/check.png'),
     paymentFailed: require('../../assets/images/cross.png'),
+    logo: require('../../assets/images/logo.png'),
   },
 };

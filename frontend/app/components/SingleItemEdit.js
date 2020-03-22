@@ -20,6 +20,36 @@ import {
 } from 'react-native';
 
 class SingleItemEditComponent extends Component {
+    state = {
+        image: null,
+    };
+
+    componentDidMount() {
+        this.getPermissionAsync();
+    }
+
+    getPermissionAsync = async () => {
+        if (Constants.platform.ios) {
+            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+            if (status !== 'granted') {
+                alert('Sorry, we need camera roll permissions to make this work!');
+            }
+        }
+    }
+
+    _pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1
+        });
+
+        if (!result.cancelled) {
+            this.setState({ image: result.uri });
+        }
+    };
+
     render() {
         const { data, onSave, onitemNameChange, onPriceChange } = this.props;
         return (
@@ -28,6 +58,10 @@ class SingleItemEditComponent extends Component {
                     justifyContent: 'center',
                 }}
             >
+                <TextButton
+                    title="Pick an image from camera roll"
+                    onPress={this._pickImage}
+                />
                 <Image
                     source={Assets.Images[data.image]}
                     style={{

@@ -8,20 +8,15 @@ import colors from '../../src/constants/colors';
 const myOrders = [
   {
     id: '5',
-    totalCost: '21',
+    totalCost: '21.98',
     items: [
       {
         id: '1',
-        price: '21'
+        price: '21.98'
       },
-      {
-        id: '2',
-        price: '22'
-      }
     ]
   }
 ]
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -52,7 +47,7 @@ class OrdersList extends React.Component {
   // componentWillMount() {
   //   this.props.fetchOrders();
   // }
-  mapItems = ({item}) => (
+  mapItems = ({ item }) => (
     <View>
       <Text>{`Item Name: ${item.id}`}</Text>
       <Text>{`Price: $${item.price}`}</Text>

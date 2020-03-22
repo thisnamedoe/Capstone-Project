@@ -15,8 +15,8 @@ class SideDrawer extends Component {
                 }}
             >
                 <TouchableOpacity onPress={Actions.showAllOrders}>
-                <Text style={{ fontSize: 18 }}>Orders</Text>
-                <OrdersList></OrdersList>
+                    <Text style={{ fontSize: 18 }}>Orders</Text>
+                    <OrdersList></OrdersList>
                 </TouchableOpacity>
             </AppBase>
         );

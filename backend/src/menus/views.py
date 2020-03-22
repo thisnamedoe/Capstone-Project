@@ -43,6 +43,7 @@ def addmenuitem(request):
 
 def removemenuitem(request):
     body = json.loads(request.body)
+    print(body)
     restaurant_email = body.get('email')
     menu = Menu.objects.get(restaurant_name = restaurant_email)
     _id = body.get('item_id')

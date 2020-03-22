@@ -22,7 +22,35 @@ export const getRestaurantItems = (email) => ({
   payload: {
     email,
   }
-})
+});
+
+export const deleteRestaurantItems = (email, id) => ({
+  type: 'DELETE_RESTAURANT_ITEMS',
+  payload: {
+    email,
+    id,
+  }
+});
+
+export const addRestaurantItem = (email, name, price, image) => ({
+  type: 'ADD_RESTAURANT_ITEM',
+  payload: {
+    email,
+    name,
+    price,
+    image
+  }
+});
+
+export const editRestaurantItem = (email, name, price, image) => ({
+  type: 'EDIT_RESTAURANT_ITEM',
+  payload: {
+    email,
+    name,
+    price,
+    image
+  }
+});
 
 // export const fetchCuisineTypes = () => ({
 //   type: 'FETCH_CUISINE_TYPES',

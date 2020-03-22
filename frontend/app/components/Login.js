@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import { Actions } from 'react-native-router-flux';
 
-
+import Assets from '../../src/constants/assets';
 import AppBase from '../base_components/AppBase';
 import PrimaryText from '../base_components/PrimaryText';
 import BR from '../base_components/BR';
@@ -12,6 +12,7 @@ import TextInput from '../base_components/TextInput';
 import RoundButton from '../base_components/RoundButton';
 import TextButton from '../base_components/TextButton';
 import Colors from '../../src/constants/colors';
+import { Image, TouchableOpacity, View } from 'react-native';
 
 class LoginComponent extends Component {
   render() {
@@ -24,7 +25,14 @@ class LoginComponent extends Component {
           justifyContent: 'center',
         }}
       >
-        <PrimaryText bold size={26}>KuaiOrder</PrimaryText>
+        <Image
+          source={Assets.Images['logo']}
+          style={{
+            width: '100%',
+            height: 150,
+          }}
+          resizeMode="contain"
+        />
         <BR size={50} />
         {loginError && <PrimaryText>{loginError.message}</PrimaryText>}
         <BR size={50} />
