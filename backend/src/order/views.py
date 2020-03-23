@@ -27,6 +27,14 @@ def get(request):
     orders = Order.objects.filter(restaurant_name=_restaurant_name)
     return JsonResponse({"orders": list(orders.values())}, status=200)
 
+def closeorder(request):
+    reqbody = json.loads(request.body)
+    orderid = reqbody['order_id']
+    obj = Order.objects.filter(id = orderid)
+    obj.pending = False
+    obj.save()
+    return JsonResponse({"success":True}, status=200)
+
 def delete(request):
     getid = request.POST.get('order_id')
     obj = Order.objects.get(name=getname)
