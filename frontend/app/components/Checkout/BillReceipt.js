@@ -44,7 +44,8 @@ class BillReceipt extends Component {
           </View>
           {
             this.props.billInfo.map((item, index) => {
-              total += item.total;
+              total += parseFloat(item.total);
+              console.log(total);
               return (
                 <BillRow key={item.name}>
                   <Text>{item.name}</Text>

@@ -21,7 +21,6 @@ import QRCodeScreen from './app/screens/QRCodeScreen';
 
 const AppRouter = () => (
     <Router>
-
         <Scene key="root" title="">
             <Scene
                 key="loginScreen"
@@ -47,7 +46,7 @@ const AppRouter = () => (
                     <Scene
                         key="restaurantItems"
                         component={RestaurantItems}
-                        title="Restaurant App"
+                        title="KuaiOrder"
                         titleStyle={{
                             color: Colors.primaryColor,
                         }}
@@ -55,17 +54,17 @@ const AppRouter = () => (
                     <Scene
                         key="showAllOrders"
                         component={OrdersList}
-                        title="Restaurant App"
+                        title="KuaiOrder"
                     />
                     <Scene
                         key="editItem"
                         component={ItemEdit}
-                        title="Restaurant App"
+                        title="KuaiOrder"
                     />
                     <Scene
                         key="addItem"
                         component={ItemAdd}
-                        title="Restaurant App"
+                        title="KuaiOrder"
                     />
                 </Scene>
             </Drawer>
@@ -79,15 +78,15 @@ const AppRouter = () => (
                 drawerWidth={300}
             >
                 <Scene>
-                    {/* <Scene
+                    <Scene
                         key="qrCode"
                         component={QRCodeScreen}
                         title="Scan Code"
-                    /> */}
+                    />
                     <Scene
                         key="itemScreen"
                         component={ItemInfoScreen}
-                        title="Restaurant App"
+                        title="KuaiOrder"
                         titleStyle={{
                             color: Colors.primaryColor,
                         }}
@@ -111,18 +110,18 @@ const AppRouter = () => (
                         drawer={false}
                         key="paymentHome"
                         component={PaymentHome}
+                        title="KuaiOrder"
                     />
 
                     <Scene
                         key="paymentSuccess"
                         component={PaymentComplete}
-                        title="Restaurant App"
+                        title="KuaiOrder"
                     />
-
                     <Scene
                         key="paymentFailed"
                         component={PaymentFailed}
-                        title="Restaurant App"
+                        title="KuaiOrder"
                     />
                     <Scene
                         key="showAllOrders"

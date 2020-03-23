@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { View, StyleSheet, FlatList, Text } from 'react-native';
 import SingleItemEdit from '../components/SingleItemEdit';
 import { updateRestaurantItem } from '../../src/actions/index';
@@ -9,6 +10,7 @@ import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { Actions } from 'react-native-router-flux';
 
+email = 'admin1';
 class ItemScreen extends React.Component {
     constructor(props) {
         super(props);
@@ -21,25 +23,28 @@ class ItemScreen extends React.Component {
 
     componentWillMount() {
     }
-    onSave = () => {
-        console.log('here');
-    }
-    onPriceChange = () => {
+    onPriceChange = (price) => {
         this.setState({
             price,
         });
     }
-    onItemNameChange = () => {
+    onItemNameChange = (name) => {
         this.setState({
             name,
         });
     }
     render() {
-        const { food } = this.props;
+        const { food, addItem, editItemLoading, editItemError } = this.props;
         return (
             <SingleItemEdit
                 data={food}
-                onSave={this.onSave}
+                editItemLoading={editItemLoading}
+                editItemError={editItemError}
+                onSave={() => {
+                    const { name, price, image } = this.state;
+                    this.props.updateRestaurantItem(food.id, email, name, price, name);
+                    Actions.restaurantItems();
+                }}
                 onPriceChange={this.onPriceChange}
                 onitemNameChange={this.onItemNameChange}
             />
@@ -62,4 +67,4 @@ function initMapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default ItemScreen
+export default connect(initMapStateToProps, initMapDispatchToProps)(ItemScreen);

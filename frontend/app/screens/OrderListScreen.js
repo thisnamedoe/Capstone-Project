@@ -8,11 +8,11 @@ import colors from '../../src/constants/colors';
 const myOrders = [
   {
     id: '5',
-    totalCost: '21.98',
+    totalCost: '28.14',
     items: [
       {
         id: '1',
-        price: '21.98'
+        price: '28.14'
       },
     ]
   }

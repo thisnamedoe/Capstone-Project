@@ -1,55 +1,131 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import { View, StyleSheet, FlatList, Text } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Camera } from 'expo-camera';
+import TextButton from '../base_components/TextButton';
+import { Actions } from 'react-native-router-flux';
 
-
-class QRCodeScreen extends React.Component {
-
+class QRCodeScreen extends Component {
     constructor(props) {
         super(props);
+
+        this.onBarCodeRead = this.onBarCodeRead.bind(this);
+        this.renderMessage = this.renderMessage.bind(this);
+        this.scannedCode = null;
+
         this.state = {
-            hasCameraPermission: null
+            hasCameraPermission: null,
+            type: Camera.Constants.Type.back,
+        };
+    }
+
+    async componentWillMount() {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA);
+        await this.setState({ hasCameraPermission: status === 'granted' });
+        await this.resetScanner();
+    }
+
+    renderAlert(title, message) {
+        Alert.alert(
+            title,
+            message,
+            [
+                { text: 'OK', onPress: () => this.resetScanner() },
+            ],
+            { cancelable: true }
+        );
+    }
+
+    onBarCodeRead({ type, data }) {
+        if ((type === this.state.scannedItem.type && data === this.state.scannedItem.data) || data === null) {
+            return;
+        }
+
+        Vibration.vibrate();
+        this.setState({ scannedItem: { data, type } });
+
+        if (type.startsWith('org.gs1.EAN')) {
+            // Do something for EAN
+            console.log(`EAN scanned: ${data}`);
+            this.resetScanner();
+            this.props.navigation.navigate('YOUR_NEXT_SCREEN', { ean: data });
+        } else if (type.startsWith('org.iso.QRCode')) {
+            // Do samething for QRCode
+            console.log(`QRCode scanned: ${data}`);
+            this.resetScanner();
+        } else {
+            this.renderAlert(
+                'This barcode is not supported.',
+                `${type} : ${data}`,
+            );
         }
     }
 
-    componentDidMount() {
-        this._requestCameraPermission();
+    renderMessage() {
+        if (this.state.scannedItem && this.state.scannedItem.type) {
+            const { type, data } = this.state.scannedItem;
+            return (
+                <Text style={styles.scanScreenMessage}>
+                    {`Scanned \n ${type} \n ${data}`}
+                </Text>
+            );
+        }
+        return <Text style={styles.scanScreenMessage}>Focus the barcode to scan.</Text>;
     }
 
-    _requestCameraPermission = async () => {
-        const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    resetScanner() {
+        this.scannedCode = null;
         this.setState({
-            hasCameraPermission: status === 'granted',
+            scannedItem: {
+                type: null,
+                data: null
+            }
         });
-    };
-
-    _handleBarCodeRead = (data) => {
-        Alert.alert(
-            'Scan successful!',
-            JSON.stringify(data)
-        );
-    };
+    }
 
     render() {
+        const { hasCameraPermission } = this.state;
+
+        if (hasCameraPermission === null) {
+            return <Text>Requesting for camera permission</Text>;
+        }
+        if (hasCameraPermission === false) {
+            return <Text>No access to camera</Text>;
+        }
         return (
-            <View>
-                {this.state.hasCameraPermission === null ?
-                    <Text>Requesting for camera permission</Text> :
-                    this.state.hasCameraPermission === false ?
-                        <Text>Camera permission is not granted</Text> :
-                        <BarCodeScanner
-                            torchMode="on"
-                            onBarCodeRead={this._handleBarCodeRead}
-                            style={{ height: 200, width: 200 }}
-                        />
-                }
+            <View style={styles.container}>
+                <TextButton
+                    title="Choose Restaurant 4450"
+                    onPress={() => {
+                        Actions.itemScreen();
+                    }}
+                />
+                <View style={{ flex: 1 }}>
+                    <BarCodeScanner
+                        onBarCodeScanned={this.onBarCodeRead}
+                        style={StyleSheet.absoluteFill}
+                    />
+                    {this.renderMessage()}
+                </View>
             </View>
         );
     }
-
 }
 
-export default QRCodeScreen;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 15,
+        backgroundColor: 'black',
+    },
+    scanScreenMessage: {
+        fontSize: 20,
+        color: '#fff',
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+});
+
+export default QRCodeScreen; 

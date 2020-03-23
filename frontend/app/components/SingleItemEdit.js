@@ -51,7 +51,7 @@ class SingleItemEditComponent extends Component {
     };
 
     render() {
-        const { data, onSave, onitemNameChange, onPriceChange } = this.props;
+        const { data, onSave, onitemNameChange, onPriceChange, editItemLoading, editItemError } = this.props;
         return (
             <AppBase
                 style={{
@@ -94,7 +94,7 @@ class SingleItemEditComponent extends Component {
                         marginRight: 'auto',
                     }}
                     underlineColorAndroid="#B9B9B9"
-                    defaultValue={data.price}
+                    defaultValue={String(data.price)}
                     placeholder="Price"
                 />
                 <BR />

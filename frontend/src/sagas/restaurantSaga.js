@@ -90,7 +90,7 @@ function* editRestaurantItemTask(action) {
     });
     const { payload } = action;
     console.log(payload);
-    const res = yield call(API.editRestaurantFoods, payload.email, payload.name, payload.price, payload.image);
+    const res = yield call(API.editRestaurantFoods, payload.id, payload.email, payload.name, payload.price, payload.image);
     if (res.status === 200) {
       yield put({
         type: 'EDIT_RESTAURANT_ITEM_SUCCESS',

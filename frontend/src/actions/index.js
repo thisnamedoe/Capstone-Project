@@ -42,9 +42,10 @@ export const addRestaurantItem = (email, name, price, image) => ({
   }
 });
 
-export const editRestaurantItem = (email, name, price, image) => ({
+export const updateRestaurantItem = (id, email, name, price, image) => ({
   type: 'EDIT_RESTAURANT_ITEM',
   payload: {
+    id,
     email,
     name,
     price,

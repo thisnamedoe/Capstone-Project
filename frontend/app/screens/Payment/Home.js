@@ -66,9 +66,7 @@ class PaymentHome extends Component {
 
 
   _onChange = (form) => {
-    console.log(form);
-    this.setState(cardData, form);
-    this.setState(validData,form.valid);
+    this.setState({ cardData: form, validData: true });
   };
 
   doPayment = async () => {
@@ -78,9 +76,7 @@ class PaymentHome extends Component {
 
     const { totalAmount } = this.props;
 
-    Actions.paymentSuccess({
-      totalAmount,
-    });
+    Actions.paymentSuccess({ totalAmount: totalAmount });
   };
 
   handleCancelOrder = () => {

@@ -35,8 +35,9 @@ function addRestaurantFoods(email = null, name = null, price = null, image = nul
   });
 }
 
-function editRestaurantFoods(email = null, name = null, price = null, image = null) {
+function editRestaurantFoods(item_id = null, email = null, name = null, price = null, image = null) {
   let data = {
+    item_id,
     email,
     name,
     price: parseFloat(price),

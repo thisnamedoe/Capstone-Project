@@ -108,12 +108,6 @@ class ItemInfoScreen extends Component {
         headerRight: <SignOutButton />,
     });
 
-    // async componentWillReceiveProps(nextProps, nextContext) {
-    //     console.log('here');
-    //     await this.props.getRestaurantItems(email);
-    //     // this.forceUpdate();
-    // }
-
     componentDidMount() {
         this.props.getRestaurantItems(email);
     }
