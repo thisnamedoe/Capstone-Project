@@ -7,12 +7,12 @@ import json
 # Create your views here.
 
 def create(request):
-    body = json.loads(request.body)
-    restaurant_email = body.get('email')
-    menu = Menu.objects.get(id = restaurant_id)
-    ordered_by = body['ordered_by']
-    customer = Customuser.objects.get(restaurant_name = restaurant_email)
-    items = body['items']
+    reqbody = json.loads(request.body)
+    restaurant_name = reqbody['restaurant_name']
+    menu = Menu.objects.get(restaurant_name = restaurant_name)
+    ordered_by = reqbody['ordered_by']
+    customer = Customuser.objects.get(email = ordered_by)
+    items = reqbody['items']
     items = MenuItem.objects.filter(id__in=(items))
     table_id = body['table_id']
     tables = Table.objects.get(id = table_id)
