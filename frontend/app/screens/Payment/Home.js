@@ -16,7 +16,7 @@ import AppBase from '../../base_components/AppBase';
 import BR from '../../base_components/BR';
 import Colors from '../../../src/constants/colors';
 import PrimaryText from '../../base_components/PrimaryText';
-import { doCancelOrder } from '../../../src/actions';
+import { doCancelOrder } from '../../../src/actions/index';
 
 const windowWidth = Dimensions.get('window').width - 18;
 
@@ -57,7 +57,6 @@ class PaymentHome extends Component {
     };
   }
 
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.createdOrder === null) {
       Actions.pop();
@@ -75,7 +74,6 @@ class PaymentHome extends Component {
     });
 
     const { totalAmount } = this.props;
-
     Actions.paymentSuccess({ totalAmount: totalAmount });
   };
 
@@ -85,6 +83,7 @@ class PaymentHome extends Component {
 
   render() {
     const { totalAmount } = this.props;
+    console.log(totalAmount);
     return (
       <AppBase>
 
@@ -95,12 +94,12 @@ class PaymentHome extends Component {
             bounces={false}
           >
             <BR size={10} />
-            <Section>
+            {/* <Section>
               <SectionItem>
                 <Heading>Order ID</Heading>
                 <SubHeading>1</SubHeading>
               </SectionItem>
-            </Section>
+            </Section> */}
 
             <Section>
               <SectionItem>
@@ -167,17 +166,20 @@ class PaymentHome extends Component {
 
 PaymentHome.defaultProps = {
   createdOrder: null,
+  tableNumber: 1,
 };
 
 PaymentHome.propTypes = {
   totalAmount: PropTypes.number.isRequired,
   doCancelOrder: PropTypes.func.isRequired,
+  createOrder: PropTypes.func.isRequired,
   createdOrder: PropTypes.object,
 };
 
 function initMapStateToProps(state) {
   return {
     createdOrder: state.orders.createdOrder,
+    tableNumber: state.table.tableNumber,
   };
 }
 

@@ -80,9 +80,10 @@ export const doCancelOrder = () => ({
   type: 'CANCEL_ORDER',
 });
 
-export const createOrder = (items, total) => ({
+export const createOrder = (tableNumber, items, total) => ({
   type: 'CREATE_ORDER',
   payload: {
+    tableNumber,
     items,
     total,
   },

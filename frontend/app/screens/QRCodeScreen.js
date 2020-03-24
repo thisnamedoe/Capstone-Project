@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Text } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Alert, View, Text, Vibration, StyleSheet } from 'react-native';
 import { Camera } from 'expo-camera';
 import TextButton from '../base_components/TextButton';
 import { Actions } from 'react-native-router-flux';
@@ -44,22 +44,21 @@ class QRCodeScreen extends Component {
 
         Vibration.vibrate();
         this.setState({ scannedItem: { data, type } });
-
-        if (type.startsWith('org.gs1.EAN')) {
-            // Do something for EAN
-            console.log(`EAN scanned: ${data}`);
-            this.resetScanner();
-            this.props.navigation.navigate('YOUR_NEXT_SCREEN', { ean: data });
-        } else if (type.startsWith('org.iso.QRCode')) {
-            // Do samething for QRCode
-            console.log(`QRCode scanned: ${data}`);
-            this.resetScanner();
-        } else {
-            this.renderAlert(
-                'This barcode is not supported.',
-                `${type} : ${data}`,
-            );
-        }
+        // if (type.startsWith('org.gs1.EAN')) {
+        //     // Do something for EAN
+        //     console.log(`EAN scanned: ${data}`);
+        //     this.resetScanner();
+        //     this.props.navigation.navigate('YOUR_NEXT_SCREEN', { ean: data });
+        // } else if (type.startsWith('org.iso.QRCode')) {  
+        //     // Do samething for QRCode
+        //     console.log(`QRCode scanned: ${data}`);
+        //     this.resetScanner();
+        // } else {
+        //     this.renderAlert(
+        //         'This barcode is not supported.',
+        //         `${type} : ${data}`,
+        //     );
+        // }
     }
 
     renderMessage() {
@@ -92,6 +91,10 @@ class QRCodeScreen extends Component {
         }
         if (hasCameraPermission === false) {
             return <Text>No access to camera</Text>;
+        }
+
+        if (this.state.scannedItem && this.state.scannedItem.type) {
+            Actions.itemScreen();
         }
         return (
             <View style={styles.container}>

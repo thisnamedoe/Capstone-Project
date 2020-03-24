@@ -15,7 +15,7 @@ import ViewRow from '../base_components/ViewRow';
 import PrimaryText from '../base_components/PrimaryText';
 import { deleteCartItem, fetchCartItems, updateCartItemQty } from '../../src/actions/cart';
 import { createOrder } from '../../src/actions/index';
-
+import { getTableNumber } from '../../src/actions/table';
 
 const FooterContainer = styled.View`
   height: 10%;
@@ -53,6 +53,7 @@ const FooterText = styled(PrimaryText)`
 class CartScreen extends Component {
   componentDidMount() {
     this.props.fetchCartItems();
+    this.props.getTableNumber();
   }
 
   // componentWillReceiveProps(nextProps, nextContext) {
@@ -74,8 +75,7 @@ class CartScreen extends Component {
   };
 
   handlePayment = (totalAmount) => {
-    console.log(totalAmount);
-    const { cartData } = this.props;
+    const { cartData, tableNumber } = this.props;
 
     if (cartData.length > 0) {
       const postData = cartData.map(item => ({
@@ -84,6 +84,7 @@ class CartScreen extends Component {
         price: item.price,
       }));
 
+      this.props.createOrder(tableNumber, cartData, totalAmount);
       Actions.paymentHome({
         totalAmount: parseFloat(totalAmount),
       });
@@ -171,9 +172,10 @@ class CartScreen extends Component {
     const taxPercent = 13;
     const tipPercent = 15;
 
-    const tax = +(totalBill * (taxPercent / 100)).toFixed(2);
-    const tipTotal = (totalBill * (tipPercent / 100)).toFixed(2);
-    const overallTotal = totalBill + tax + tipTotal;
+    const tax = parseFloat(totalBill * (taxPercent / 100)).toFixed(2);
+    const tipTotal = parseFloat(totalBill * (tipPercent / 100)).toFixed(2);
+    let overallTotal = 0;
+    overallTotal = parseFloat(totalBill) + parseFloat(tax) + parseFloat(tipTotal);
     const billInfo = [
       {
         name: 'Items Total',
@@ -211,6 +213,7 @@ class CartScreen extends Component {
 
 CartScreen.defaultProps = {
   createdOrder: null,
+  tableNumber: null,
 };
 
 CartScreen.propTypes = {
@@ -218,6 +221,7 @@ CartScreen.propTypes = {
   deleteCartItem: PropTypes.func.isRequired,
   fetchCartItems: PropTypes.func.isRequired,
   updateCartItemQty: PropTypes.func.isRequired,
+  getTableNumber: PropTypes.func.isRequired,
   createOrder: PropTypes.func.isRequired,
   createdOrder: PropTypes.object,
 };
@@ -227,6 +231,7 @@ function initMapStateToProps(state) {
   return {
     cartData: state.cart.cartData,
     createdOrder: state.orders.createdOrder,
+    tableNumber: state.table.tableNumber,
   };
 }
 
@@ -236,6 +241,7 @@ function initMapDispatchToProps(dipatch) {
     fetchCartItems,
     updateCartItemQty,
     createOrder,
+    getTableNumber,
   }, dipatch);
 }
 

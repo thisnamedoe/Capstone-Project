@@ -13,63 +13,65 @@ import FoodItem from '../components/FoodItem';
 import ViewRow from '../base_components/ViewRow';
 import BR from '../base_components/BR';
 import { updateCartItems } from '../../src/actions/cart';
+import { updateTableNumber } from '../../src/actions/table';
 import { getRestaurantItems } from '../../src/actions/index';
+import TextInput from '../base_components/TextInput';
 import SignOutButton from '../components/RightHeaderButtons';
 
 const restaurantName = 'SE 4450 Restaurant'
 
 const email = 'admin1';
 
-const cuisines = [
-  {
-    id: '1',
-    name: 'Noodles',
-    image: 'noodles',
-    price: '10.99',
-  },
-  {
-    id: '2',
-    name: 'Pizza',
-    image: 'pizza',
-    price: '8.99',
-  },
-  {
-    id: '3',
-    name: 'Cupcake',
-    image: 'desserts',
-    price: '3.99',
-  },
-  {
-    id: '4',
-    name: 'Martini',
-    image: 'beverages',
-    price: '5.99',
-  },
-  {
-    id: '5',
-    name: 'Ice Cream',
-    image: 'ice-creams',
-    price: '4.99',
-  },
-  {
-    id: '6',
-    name: 'Taco',
-    image: 'taco',
-    price: '3.99',
-  },
-  {
-    id: '7',
-    name: 'Burger',
-    image: 'burger',
-    price: '5.99',
-  },
-  {
-    id: '8',
-    name: 'Salad',
-    image: 'salad',
-    price: '9.99',
-  },
-]
+// const cuisines = [
+//   {
+//     id: '1',
+//     name: 'Noodles',
+//     image: 'noodles',
+//     price: '10.99',
+//   },
+//   {
+//     id: '2',
+//     name: 'Pizza',
+//     image: 'pizza',
+//     price: '8.99',
+//   },
+//   {
+//     id: '3',
+//     name: 'Cupcake',
+//     image: 'desserts',
+//     price: '3.99',
+//   },
+//   {
+//     id: '4',
+//     name: 'Martini',
+//     image: 'beverages',
+//     price: '5.99',
+//   },
+//   {
+//     id: '5',
+//     name: 'Ice Cream',
+//     image: 'ice-creams',
+//     price: '4.99',
+//   },
+//   {
+//     id: '6',
+//     name: 'Taco',
+//     image: 'taco',
+//     price: '3.99',
+//   },
+//   {
+//     id: '7',
+//     name: 'Burger',
+//     image: 'burger',
+//     price: '5.99',
+//   },
+//   {
+//     id: '8',
+//     name: 'Salad',
+//     image: 'salad',
+//     price: '9.99',
+//   },
+// ]
 
 class ItemInfoScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -128,7 +130,7 @@ class ItemInfoScreen extends Component {
   };
 
   render() {
-    const { restaurantItems, restaurantLoading, restaurantError } = this.props;
+    const { restaurantItems, tableNumber, restaurantLoading, restaurantError } = this.props;
 
     return (
       <AppBase
@@ -153,6 +155,20 @@ class ItemInfoScreen extends Component {
             }}
           >
             <PrimaryText align="left" size={24}>{restaurantName}</PrimaryText>
+            <TextInput
+              autoCorrect={false}
+              align="left"
+              onChangeText={(tableNumber) => {
+                this.props.updateTableNumber(tableNumber)
+              }}
+              style={{
+                width: '80%',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}
+              underlineColorAndroid="#B9B9B9"
+              placeholder={String(tableNumber)}
+            />
             <BR size={5} />
           </View>
           {this.renderFoodList(restaurantItems)}
@@ -162,16 +178,20 @@ class ItemInfoScreen extends Component {
   }
 }
 
-ItemInfoScreen.defaultProps = {};
+ItemInfoScreen.defaultProps = {
+  tableNumber: 1
+};
 
 ItemInfoScreen.propTypes = {
   updateCartItems: PropTypes.func.isRequired,
   getRestaurantItems: PropTypes.func.isRequired,
+  updateTableNumber: PropTypes.func.isRequired,
 };
 
 function initMapStateToProps(state) {
   return {
     restaurantItems: state.restaurant.restaurantItems,
+    tableNumber: state.table.tableNumber,
   };
 }
 
@@ -179,6 +199,7 @@ function initMapDispatchToProps(dispatch) {
   return bindActionCreators({
     updateCartItems,
     getRestaurantItems,
+    updateTableNumber
   }, dispatch);
 }
 
