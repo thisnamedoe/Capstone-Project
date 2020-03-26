@@ -71,7 +71,7 @@ def authenticate(request):
         obj = Customuser.objects.get(email=_username)
 
         if obj.password == checkpassword:
-            return JsonResponse({"success":True, "isRestaurant":obj.isRestaurant, "token":hashlib.md5(os.urandom(15)).hexdigest()}, status=200, safe = False)
+            return JsonResponse({"success":True, "email": _username, "isRestaurant":obj.isRestaurant, "token":hashlib.md5(os.urandom(15)).hexdigest()}, status=200, safe = False)
         else:
             return JsonResponse({"success":False, "message": "Invalid username or password"}, status=400, safe = False)
     except ValueError:

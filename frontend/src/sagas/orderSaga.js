@@ -1,19 +1,11 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import API from '../service/orders';
 
-const authTokenSelector = state => state.auth.loginMessage.token;
-const userIdSelector = state => state.auth.loginMessage.userId;
+const emailSelector = state => state.auth.loginMessage.email;
 
 function* orderFetchTask(action) {
   try {
     const { payload } = action;
-
-    const authToken = yield select(authTokenSelector);
-    const userId = yield select(userIdSelector);
-
-    const res = yield call(API.getOrders, userId, {
-      Authorization: `Bearer ${authToken}`,
-    });
 
     if (res.status === 200) {
       yield put({
@@ -39,12 +31,9 @@ function* orderTask(action) {
   try {
     const { payload } = action;
 
-    const authToken = yield select(authTokenSelector);
-    const userId = yield select(userIdSelector);
+    const email = yield select(emailSelector);
 
-    const res = yield call(API.createOrder, userId, payload.items, payload.total, {
-      Authorization: `Bearer ${authToken}`,
-    });
+    const res = yield call(API.createOrder, email, payload.items, restaurant_email, payload.total);
 
     if (res.status === 200) {
       yield put({

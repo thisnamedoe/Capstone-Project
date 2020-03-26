@@ -6,7 +6,7 @@ function getOrders(userId, headers) {
     userId,
   };
   return request({
-    url: ORDER_URL, method: 'GET', params, headers,
+    url: ORDER_URL, method: 'POST', params, headers,
   });
 }
 

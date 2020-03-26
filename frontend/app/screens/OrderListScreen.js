@@ -11,7 +11,7 @@ const myOrders = [
     totalCost: '28.14',
     items: [
       {
-        id: '1',
+        id: 'noodles',
         price: '28.14'
       },
     ]
@@ -60,6 +60,10 @@ class OrdersList extends React.Component {
         <Text>{item.id}</Text>
       </View>
       <View style={styles.divider}>
+        <Text style={styles.heading}>Table Number</Text>
+        <Text>1</Text>
+      </View>
+      <View style={styles.divider}>
         <Text style={styles.heading}>Total Price:</Text>
         <Text>{`$ ${item.totalCost}`}</Text>
       </View>
@@ -79,7 +83,6 @@ class OrdersList extends React.Component {
           data={myOrders}
           renderItem={this.renderItem}
         />
-
       </View>
     );
   }

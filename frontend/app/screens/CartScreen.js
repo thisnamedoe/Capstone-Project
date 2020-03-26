@@ -56,16 +56,6 @@ class CartScreen extends Component {
     this.props.getTableNumber();
   }
 
-  // componentWillReceiveProps(nextProps, nextContext) {
-  //   if (nextProps.createdOrder !== null) {
-  //     const { createdOrder } = nextProps;
-  //     Actions.paymentHome({
-  //       orderId: createdOrder.id,
-  //       totalAmount: createdOrder.totalCost,
-  //     });
-  //   }
-  // }
-
   handleItemValueChange = (item, qty) => {
     if (qty === 0) {
       this.props.deleteCartItem(item.id);
